@@ -1,21 +1,26 @@
 import React from 'react';
 import './App.css';
-import { SideMenu } from './SideMenu';
-import { BrowserRouter, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import createAppBrowserRouter from './AppRoutes';
 import './mui'
-import { CssBaseline } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import Dashboard from './Dashboard';
 
 const router = createAppBrowserRouter()
+const defaultTheme = createTheme();
 
 function App() {
-  return (<>
-      <CssBaseline />
-      <SideMenu />
+  return (
+    <ThemeProvider theme={defaultTheme}>
       <main>
-    <RouterProvider router={router} />
+        <CssBaseline />
+        {/* <SideMenu /> */}
+        <Dashboard />
+        <RouterProvider router={router} />
       </main>
-  </>
+    </ThemeProvider>
+
   );
 }
 
