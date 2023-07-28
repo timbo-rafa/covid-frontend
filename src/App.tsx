@@ -16,7 +16,6 @@ function App() {
       <main>
         <CssBaseline />
         {/* <SideMenu /> */}
-        <Dashboard />
         <RouterProvider router={router} />
       </main>
     </ThemeProvider>
