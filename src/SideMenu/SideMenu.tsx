@@ -22,6 +22,11 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 
+/**
+ * Taken from Mui Dashboard Templates
+ * https://github.com/mui/material-ui/blob/v5.14.2/docs/data/material/getting-started/templates/dashboard/Dashboard.js
+ */
+
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps>(({ theme, open }) => ({
