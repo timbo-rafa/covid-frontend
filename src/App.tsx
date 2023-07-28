@@ -1,15 +1,21 @@
 import React from 'react';
 import './App.css';
+import { SideMenu } from './SideMenu';
+import { BrowserRouter, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import createAppBrowserRouter from './AppRoutes';
+import './mui'
 import { CssBaseline } from '@mui/material';
 
-function App() {
-  return (
-    <>
-      <CssBaseline />
-      <div className="App">
+const router = createAppBrowserRouter()
 
-      </div>
-    </>
+function App() {
+  return (<>
+      <CssBaseline />
+      <SideMenu />
+      <main>
+    <RouterProvider router={router} />
+      </main>
+  </>
   );
 }
 
