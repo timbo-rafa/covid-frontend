@@ -4,6 +4,7 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
+
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -31,7 +32,6 @@ export function WorldPage() {
             height: 240,
           }}
         >
-
         </Paper>
       </Grid>
       {/* Recent Deposits */}
