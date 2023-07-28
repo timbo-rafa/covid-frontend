@@ -23,6 +23,7 @@ import { Outlet } from 'react-router-dom';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
 
+
 const drawerWidth: number = 240;
 
 interface AppBarProps extends MuiAppBarProps {
@@ -73,7 +74,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function Dashboard({children}: React.PropsWithChildren) {
+export function SideMenu() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);

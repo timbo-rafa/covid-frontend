@@ -5,7 +5,6 @@ import createAppBrowserRouter from './AppRoutes';
 import './mui'
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import Dashboard from './Dashboard';
 
 const router = createAppBrowserRouter()
 const defaultTheme = createTheme();
