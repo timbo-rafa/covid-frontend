@@ -12,11 +12,9 @@ const defaultTheme = createTheme();
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <main>
-        <CssBaseline />
-        {/* <SideMenu /> */}
-        <RouterProvider router={router} />
-      </main>
+      <CssBaseline />
+      {/* <SideMenu /> */}
+      <RouterProvider router={router} />
     </ThemeProvider>
 
   );

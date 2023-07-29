@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBrowserRouter } from "react-router-dom";
-import { WorldPage } from './pages/WorldPage';
+import { WorldMapPage } from './pages/WorldMap/WorldMapPage';
 import { SideMenu } from './SideMenu/SideMenu';
 
 export default function createAppBrowserRouter() {
@@ -10,7 +10,7 @@ export default function createAppBrowserRouter() {
     children: [
       {
         path: '/world',
-        element: <WorldPage />
+        element: <WorldMapPage />
       }
     ]
   }, {
