@@ -1,5 +1,5 @@
 import React from 'react';
-import {createBrowserRouter } from "react-router-dom";
+import {Navigate, createBrowserRouter } from "react-router-dom";
 import { WorldMapPage } from './pages/WorldMap/WorldMapPage';
 import { SideMenu } from './SideMenu/SideMenu';
 
@@ -11,6 +11,10 @@ export default function createAppBrowserRouter() {
       {
         path: '/world',
         element: <WorldMapPage />
+      },
+      {
+        path: '/',
+        element: <Navigate to='/world' />
       }
     ]
   }, {
