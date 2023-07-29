@@ -1,8 +1,7 @@
-import mapboxgl, { Expression } from "mapbox-gl";
+import mapboxgl from "mapbox-gl";
 import React from "react";
 
-export const baseMatchExpression = ['match', ['get', 'iso_3166_1_alpha_3']];
-export const defaultNoValueMatchExpression = 'rgba(0, 0, 0, 0)'
+export const sourceLayerName = 'country_boundaries';
 
 const data = [
   { 'code': 'ROU', 'hdi': 0.811 },
@@ -10,16 +9,18 @@ const data = [
   { 'code': 'SRB', 'hdi': 0.787 },
 ];
 
-export function useNewWorldMap() {
+export function useMapboxChoroplethMap() {
   const mapContainer = React.useRef(null);
   const mapRef = React.useRef<mapboxgl.Map | null>(null);
   // const countries = useCountriesQuery();
-  const [lng, setLng] = React.useState(0);
-  const [lat, setLat] = React.useState(10);
-  const [zoom, setZoom] = React.useState(2);
 
   React.useEffect(() => {
-    if (mapRef.current) return; // initialize map only once
+    const lng = 0;
+    const lat = 10;
+    const zoom = 2;
+
+    console.log('useCreateWorldMap useEffect')
+    if (mapRef.current) return; // initialize Ref only once
     if (!mapContainer.current) return;
     const map = new mapboxgl.Map({
       container: mapContainer.current,
@@ -31,7 +32,7 @@ export function useNewWorldMap() {
     });
 
     map.on('load', () => {
-      console.log('addSource')
+      console.log(`map.on('load')`)
       // Add source for country polygons using the Mapbox Countries tileset
       // The polygons contain an ISO 3166 alpha-3 code which can be used to for joining the data
       // https://docs.mapbox.com/vector-tiles/reference/mapbox-countries-v1
@@ -42,7 +43,7 @@ export function useNewWorldMap() {
 
       // Build a GL match expression that defines the color for every vector tile feature
       // Use the ISO 3166-1 alpha 3 code as the lookup key for the country shape
-      const matchExpression : Expression= ['match', ['get', 'iso_3166_1_alpha_3']];
+      const matchExpression: mapboxgl.Expression = ['match', ['get', 'iso_3166_1_alpha_3']];
 
       // Calculate color values for each country based on 'hdi' value
       for (const row of data) {
@@ -73,7 +74,7 @@ export function useNewWorldMap() {
           'id': 'countries-join',
           'type': 'fill',
           'source': 'countries',
-          'source-layer': 'country_boundaries',
+          'source-layer': sourceLayerName,
           'paint': {
             'fill-color': matchExpression
           },
@@ -81,11 +82,10 @@ export function useNewWorldMap() {
         },
         'admin-1-boundary-bg'
       );
-
-      // map.setPaintProperty('country_boundaries', 'fill-color', 'red')
-      // map.triggerRepaint()
     });
-  }, []);
 
-  return {mapContainer, map: mapRef}
+    //mapRef.current = map
+  }, [mapRef, mapContainer]);
+
+  return { mapContainer, map: mapRef }
 }

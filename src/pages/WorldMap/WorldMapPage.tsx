@@ -1,6 +1,7 @@
-import Container from '@mui/material/Container';
+import React from 'react'
 import { WorldMap } from './WorldMap';
 
 export function WorldMapPage() {
   return <WorldMap />
+    
 }

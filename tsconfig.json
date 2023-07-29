@@ -20,9 +20,17 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      
+      "@geo-utils": [
+        "./src/utils/geo"
+      ],
+      "@type-utils": [
+        "./src/utils/type"
+      ],
+      "@covid-api": [
+        "./src/covid-api"
+      ]
     },
-    "jsxImportSource": "react"
+    "jsxImportSource": "react",
   },
   "include": [
     "src"
