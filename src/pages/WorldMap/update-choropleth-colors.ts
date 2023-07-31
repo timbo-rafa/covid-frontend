@@ -1,7 +1,7 @@
 import { CountryCovidCasesDto, CountryDto } from "@generated-graphql-hooks";
 import { CountryIso3 } from "@geo-utils";
-import { sourceFillLayerId } from "./use-mapbox-choropleth-map";
 import { getColorIntensity, noDataColor } from "@color-utils";
+import { choroplethLayerId } from "./add-choropleth-layer";
 
 export function updateChoroplethColors(map: mapboxgl.Map, countries: CountryDto[], dataColumn: keyof CountryCovidCasesDto) {
 
@@ -28,7 +28,7 @@ export function updateChoroplethColors(map: mapboxgl.Map, countries: CountryDto[
 
   const matchExpression = getMatchExpression(valueByCountry, minValue, maxValue)
 
-  map.setPaintProperty(sourceFillLayerId, 'fill-color', matchExpression)
+  map.setPaintProperty(choroplethLayerId, 'fill-color', matchExpression)
 }
 
 function getMatchExpression(countryColorMatchExpression: Partial<Record<CountryIso3, number>>,minValue: number, maxValue: number) {
