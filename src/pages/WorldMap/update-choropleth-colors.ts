@@ -1,42 +1,47 @@
-import { CountryCovidCasesDto } from "@generated-graphql-hooks";
+import { CountryCovidCasesDto, CountryDto } from "@generated-graphql-hooks";
 import { CountryIso3 } from "@geo-utils";
-import { arrayToDictionary } from "../../utils/type";
-import { CovidDataType } from "./covid-data.models";
-import { sourceLayerName } from "./use-mapbox-choropleth-map";
+import { sourceFillLayerId } from "./use-mapbox-choropleth-map";
+import { getColorIntensity, noDataColor } from "@color-utils";
 
-export function updateChoroplethColors(map: mapboxgl.Map, data: CountryCovidCasesDto[], dataColumn: keyof CovidDataType) {
+export function updateChoroplethColors(map: mapboxgl.Map, countries: CountryDto[], dataColumn: keyof CountryCovidCasesDto) {
 
-  if (data.length === 0) {
+  if (countries.length === 0) {
     return
   }
 
-  const { valueByCountry, maxValue } = arrayToDictionary(data[0] as any, dataColumn)
+  const valueByCountry: Record<string, number | undefined | null> = {}
 
-  const matchExpression = getMatchExpression(valueByCountry, maxValue)
+  let minValue = countries[0].covidCases[0]?.[dataColumn] || 0
+  let maxValue = minValue;
+  for (const country of countries) {
+    const value = country.covidCases[0]?.[dataColumn]
+    valueByCountry[country.isoCode] = value
 
-  map.setPaintProperty(sourceLayerName, 'fill-color', matchExpression)
+    if (value > maxValue) {
+      maxValue = value
+    } 
+
+    if (value < minValue) {
+      minValue = value
+    }
+  }
+
+  const matchExpression = getMatchExpression(valueByCountry, minValue, maxValue)
+
+  map.setPaintProperty(sourceFillLayerId, 'fill-color', matchExpression)
 }
 
-function getMatchExpression(countryColorMatchExpression: Partial<Record<CountryIso3, number>>, maxValue: number) {
+function getMatchExpression(countryColorMatchExpression: Partial<Record<CountryIso3, number>>,minValue: number, maxValue: number) {
   const matchExpression = ['match', ['get', 'iso_3166_1_alpha_3']];
-  const defaultNoValueMatchExpression = 'rgba(0, 0, 0, 0)'
 
   for (const countryIsoString in countryColorMatchExpression) {
     const countryIso3 = countryIsoString as CountryIso3
-    const color = getColorIntensity(countryColorMatchExpression[countryIso3], maxValue);
+    const color = getColorIntensity(countryColorMatchExpression[countryIso3], minValue, maxValue);
 
     matchExpression.push(countryIso3, color);
   }
 
-  matchExpression.push(defaultNoValueMatchExpression);
+  matchExpression.push(noDataColor);
 
   return matchExpression
-}
-
-function getColorIntensity(dataValue: number | undefined, maxValue: number) {
-  const value = dataValue || 0
-  const intensity = value / maxValue;
-  const red = intensity * 255;
-  const color = `rgb(${red}, 0, 0)`;
-  return color;
 }

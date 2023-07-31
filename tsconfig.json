@@ -21,20 +21,20 @@
     "jsx": "react-jsx",
     "strictPropertyInitialization": false,
     "baseUrl": "./",
-    "paths": {
-      "@geo-utils": [
-        "src/utils/geo"
-      ],
-      "@type-utils": [
-        "src/utils/type"
-      ],
-      "@covid-api": [
-        "src/covid-api"
-      ],
-      "@generated-graphql-hooks": [
-        "src/generated/graphql-hooks"
-      ]
-    },
+    // "paths": {
+    //   "@geo-utils": [
+    //     "src/utils/geo"
+    //   ],
+    //   "@type-utils": [
+    //     "src/utils/type"
+    //   ],
+    //   "@covid-api": [
+    //     "src/covid-api"
+    //   ],
+    //   "@generated-graphql-hooks": [
+    //     "src/generated/graphql-hooks"
+    //   ]
+    // },
     "jsxImportSource": "react",
   },
   "include": [

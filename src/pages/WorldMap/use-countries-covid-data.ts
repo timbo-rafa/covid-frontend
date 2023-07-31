@@ -1,12 +1,13 @@
-import { useCanadaCovidDataQuery } from "@generated-graphql-hooks";
+import { useCountryCovidDataQuery } from "@generated-graphql-hooks";
 import React from "react";
 
-export function useCountriesCovidDataQuery() {
-  const response = useCanadaCovidDataQuery({})
+export function useCountriesCovidApiQuery() {
+  const response = useCountryCovidDataQuery({variables: {countryCovidDataInput: {}}})
 
-  const countries = response.data?.covidData
+  const countries = response.data?.countryCovidData
   
+  console.log(`countries api query returned ${countries?.length} countries`)
   return React.useMemo(() => {
     return { countries, loading: response.loading }
-  }, [response.data?.covidData, response.loading])
+  }, [countries, response.loading])
 }

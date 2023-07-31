@@ -1,6 +1,6 @@
 
-query canadaCovidData {
-  countryCovidData(countryCovidDataInput: {countryIds: [38]}) {
+query countryCovidData($countryCovidDataInput: CountryCovidDataInput!) {
+  countryCovidData(countryCovidDataInput: $countryCovidDataInput) {
     id
     name
     isoCode

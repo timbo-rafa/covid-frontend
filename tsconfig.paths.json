@@ -8,6 +8,9 @@
       "@type-utils": [
         "src/utils/type"
       ],
+      "@color-utils": [
+        "src/utils/color"
+      ],
       "@covid-api": [
         "src/covid-api"
       ],

@@ -1,10 +1,9 @@
-import { useCanadaCovidDataQuery } from '@generated-graphql-hooks';
 import { styled } from '@mui/material';
 import mapboxgl from 'mapbox-gl';
 import React from 'react';
-import { useMapboxChoroplethMap } from './use-mapbox-choropleth-map';
 import { updateChoroplethColors } from './update-choropleth-colors';
-import { useCountriesCovidDataQuery } from './use-countries-covid-data';
+import { useCountriesCovidApiQuery } from './use-countries-covid-data';
+import { useMapboxChoroplethMap } from './use-mapbox-choropleth-map';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_GL_TOKEN || '';
 
@@ -13,17 +12,16 @@ const StyledDiv = styled('div')({
 })
 
 export function WorldMap() {
-  const { mapContainer, map } = useMapboxChoroplethMap()
-  const {countries, loading} = useCountriesCovidDataQuery()
+  const { mapContainer, map, mapHasLoaded } = useMapboxChoroplethMap()
+  const {countries, loading} = useCountriesCovidApiQuery()
 
   React.useEffect(() => {
-    console.log(`UseEffect for update is null ? ${map.current=== null}` )
-    console.log(typeof updateChoroplethColors)
-    if (map.current !== null && !loading && countries) {
-      console.log('updateChoroplethColors')
+    console.log(`WorldMap choropleth effect mapHasLoaded=${mapHasLoaded} mapCurrentNotNull=${map.current !== null} NotLoading=${!loading} countries=${!!countries}}`)
+    console.log(`WorldMap choropleth effect ${!!(map.current !== null && mapHasLoaded && !loading && countries)}`)
+    if (map.current !== null && mapHasLoaded && !loading && countries) {
       updateChoroplethColors(map.current, countries, 'newCases')
     }
-  }, [map]);
+  }, [map, mapHasLoaded, countries, loading]);
 
   return <StyledDiv>
     <StyledDiv ref={mapContainer} className='map-container' />

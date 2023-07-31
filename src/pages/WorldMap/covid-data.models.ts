@@ -1,11 +1,3 @@
-import { CountryIso3 } from "@geo-utils"
-
-export type CountryCovidDataType = {
-  id: number;
-  isoCode: string; // CountryIso3;
-  covidData: CovidDataType[]
-}
-
 export type CovidDataType = {
   newCases: number | null
   //countryId: number;
