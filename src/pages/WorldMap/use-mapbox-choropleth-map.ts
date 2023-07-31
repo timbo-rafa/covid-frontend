@@ -84,7 +84,7 @@ export function useMapboxChoroplethMap() {
       );
     });
 
-    //mapRef.current = map
+    mapRef.current = map
   }, [mapRef, mapContainer]);
 
   return { mapContainer, map: mapRef }

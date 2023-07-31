@@ -1,9 +1,10 @@
-import React from 'react';
-import mapboxgl from 'mapbox-gl';
+import { useCanadaCovidDataQuery } from '@generated-graphql-hooks';
 import { styled } from '@mui/material';
-import * as countries from './api-response.json';
+import mapboxgl from 'mapbox-gl';
+import React from 'react';
 import { useMapboxChoroplethMap } from './use-mapbox-choropleth-map';
 import { updateChoroplethColors } from './update-choropleth-colors';
+import { useCountriesCovidDataQuery } from './use-countries-covid-data';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_GL_TOKEN || '';
 
@@ -11,21 +12,18 @@ const StyledDiv = styled('div')({
   height: '100%'
 })
 
-export function useCountriesQuery() {
-  return countries;
-}
-
 export function WorldMap() {
   const { mapContainer, map } = useMapboxChoroplethMap()
-  const countries = useCountriesQuery()
+  const {countries, loading} = useCountriesCovidDataQuery()
 
   React.useEffect(() => {
     console.log(`UseEffect for update is null ? ${map.current=== null}` )
-    if (map.current !== null) {
+    console.log(typeof updateChoroplethColors)
+    if (map.current !== null && !loading && countries) {
       console.log('updateChoroplethColors')
-      updateChoroplethColors(map.current, countries as any, 'newCases')
+      updateChoroplethColors(map.current, countries, 'newCases')
     }
-  }, [map, countries]);
+  }, [map]);
 
   return <StyledDiv>
     <StyledDiv ref={mapContainer} className='map-container' />

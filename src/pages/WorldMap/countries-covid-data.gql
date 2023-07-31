@@ -1,0 +1,12 @@
+
+query canadaCovidData {
+  countryCovidData(countryCovidDataInput: {countryIds: [38]}) {
+    id
+    name
+    isoCode
+    covidCases {
+      date
+      newCases
+    }
+  }
+}

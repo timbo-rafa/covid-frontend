@@ -1,15 +1,16 @@
+import { CountryCovidCasesDto } from "@generated-graphql-hooks";
 import { CountryIso3 } from "@geo-utils";
 import { arrayToDictionary } from "../../utils/type";
 import { CovidDataType } from "./covid-data.models";
 import { sourceLayerName } from "./use-mapbox-choropleth-map";
 
-export function updateChoroplethColors(map: mapboxgl.Map, data: CovidDataType[], dataColumn: keyof CovidDataType) {
+export function updateChoroplethColors(map: mapboxgl.Map, data: CountryCovidCasesDto[], dataColumn: keyof CovidDataType) {
 
   if (data.length === 0) {
     return
   }
 
-  const { valueByCountry, maxValue } = arrayToDictionary(data, dataColumn)
+  const { valueByCountry, maxValue } = arrayToDictionary(data[0] as any, dataColumn)
 
   const matchExpression = getMatchExpression(valueByCountry, maxValue)
 
