@@ -1,5 +1,8 @@
-import { useCountryCovidDataQuery } from "@generated-graphql-hooks";
+import { CountryDto, useCountryCovidDataQuery } from "@generated-graphql-hooks";
+import { CountryIso3, stringToCountryIso3 } from "@geo-utils";
 import React from "react";
+
+export type CovidDataByCountryIsoDictionary = Record<CountryIso3, CountryDto>;
 
 export function useCountriesCovidApiQuery() {
   const response = useCountryCovidDataQuery({variables: {countryCovidDataInput: {}}})
@@ -8,6 +11,19 @@ export function useCountriesCovidApiQuery() {
   
   console.log(`countries api query returned ${countries?.length} countries`)
   return React.useMemo(() => {
-    return { countries, loading: response.loading }
+    const covidDataByCountryIso: Partial<CovidDataByCountryIsoDictionary> = {}
+
+    if (countries) {
+      for (const country of countries) {
+        const validatedIsoCode = stringToCountryIso3(country.isoCode)
+        
+        if (!validatedIsoCode) {
+          console.warn(`country ${country.isoCode} ${country.name} from api not in FE country iso enum`)
+        } else {
+          covidDataByCountryIso[validatedIsoCode] = country
+        }
+      }
+    }
+    return { countries, loading: response.loading, covidDataByCountryIso:covidDataByCountryIso as CovidDataByCountryIsoDictionary }
   }, [countries, response.loading])
 }

@@ -1,7 +1,7 @@
 import mapboxgl from "mapbox-gl";
 import { choroplethLayerId } from "./add-choropleth-layer";
 
-const hoverLayerId = 'country-fills'
+export const hoverLayerId = 'country-fills'
 
 let hoveredPolygonId: string | number | null = null
 
@@ -44,7 +44,6 @@ export function addHoverLayer(map: mapboxgl.Map) {
         );
       }
       hoveredPolygonId = e.features[0].id || null;
-//      console.log(`hovered=${JSON.stringify(e.features[0].properties?.iso_3166_1_alpha_3)}`)
       map.setFeatureState(
         { source: 'countries-hover', sourceLayer: 'country_boundaries', id: hoveredPolygonId || undefined },
         { hover: true }

@@ -3,7 +3,6 @@ import React from "react";
 import { addChoroplethLayer } from "./add-choropleth-layer";
 import { addHoverLayer } from "./add-hover-layer";
 
-
 export function useMapboxChoroplethMap() {
   const mapContainer = React.useRef(null);
   const map = React.useRef<mapboxgl.Map | null>(null);
