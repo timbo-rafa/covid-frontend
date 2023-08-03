@@ -2,6 +2,15 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Run Covid App
+
+Make sure back-end is running https://github.com/timbo-rafa/covid-backend so we can fetch schema.gql
+
+```bash
+$ npm run codegen
+$ npm start
+```
+
 ## Available Scripts
 
 In the project directory, you can run:

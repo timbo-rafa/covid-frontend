@@ -1,11 +1,11 @@
-import { CountryDto, useCountryCovidDataQuery } from "@generated-graphql-hooks";
+import { CountryCovidDataInput, CountryDto, useCountryCovidDataQuery } from "@generated-graphql-hooks";
 import { CountryIso3, stringToCountryIso3 } from "@geo-utils";
 import React from "react";
 
 export type CovidDataByCountryIsoDictionary = Record<CountryIso3, CountryDto>;
 
-export function useCountriesCovidApiQuery() {
-  const response = useCountryCovidDataQuery({variables: {countryCovidDataInput: {}}})
+export function useCountriesCovidApiQuery(countryCovidDataInput: CountryCovidDataInput) {
+  const response = useCountryCovidDataQuery({variables: {countryCovidDataInput}})
 
   const countries = response.data?.countryCovidData
   

@@ -13,7 +13,7 @@ const StyledDiv = styled('div')({
 })
 
 export function WorldMap() {
-  const { countries, loading, covidDataByCountryIso } = useCountriesCovidApiQuery()
+  const { countries, loading, covidDataByCountryIso } = useCountriesCovidApiQuery({})
   const { mapContainer, map, mapHasLoaded } = useMapboxChoroplethMap()
 
 

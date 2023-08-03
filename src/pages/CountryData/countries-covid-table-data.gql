@@ -1,0 +1,25 @@
+
+query countryCovidTableData($countryCovidDataInput: CountryCovidDataInput!) {
+  countryCovidTableData(countryCovidDataInput: $countryCovidDataInput) {
+    id
+    name
+    isoCode
+    newCases
+    totalCases
+    newDeaths
+    totalDeaths
+    hospPatients
+    icuPatients
+    weeklyHospAdmissions
+    weeklyIcuAdmissions
+    newTests
+    positiveRate
+    testsPerCase
+    totalTests
+    newVaccinations
+    peopleFullyVaccinated
+    peopleVaccinated
+    totalBoosters
+    totalVaccinations
+  }
+}
