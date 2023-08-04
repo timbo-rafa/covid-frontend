@@ -9,25 +9,30 @@ import { useMapboxChoroplethMap } from './use-mapbox-choropleth-map';
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_GL_TOKEN || '';
 
 const StyledDiv = styled('div')({
-  height: '100%'
-})
+  height: '100%',
+});
 
 export function WorldMap() {
-  const { countries, loading, covidDataByCountryIso } = useCountriesCovidApiQuery({})
-  const { mapContainer, map, mapHasLoaded } = useMapboxChoroplethMap()
+  const { countries, loading, covidDataByCountryIso } = useCountriesCovidApiQuery({});
+  const { mapContainer, map, mapHasLoaded } = useMapboxChoroplethMap();
 
-
-  useClickRedirectToCountryData(map)
+  useClickRedirectToCountryData(map);
 
   React.useEffect(() => {
-    console.log(`WorldMap choropleth effect mapHasLoaded=${mapHasLoaded} mapCurrentNotNull=${map.current !== null} NotLoading=${!loading} countries=${!!countries}}`)
-    console.log(`WorldMap choropleth effect ${!!(map.current !== null && mapHasLoaded && !loading && countries)}`)
+    console.log(
+      `WorldMap choropleth effect mapHasLoaded=${mapHasLoaded} mapCurrentNotNull=${
+        map.current !== null
+      } NotLoading=${!loading} countries=${!!countries}}`,
+    );
+    console.log(`WorldMap choropleth effect ${!!(map.current !== null && mapHasLoaded && !loading && countries)}`);
     if (map.current !== null && mapHasLoaded && !loading && countries) {
-      updateChoroplethColors(map.current, countries, 'newCases')
+      updateChoroplethColors(map.current, countries, 'newCases');
     }
   }, [map, mapHasLoaded, countries, loading]);
 
-  return <StyledDiv>
-    <StyledDiv ref={mapContainer} className='map-container' />
-  </StyledDiv>
+  return (
+    <StyledDiv>
+      <StyledDiv ref={mapContainer} className="map-container" />
+    </StyledDiv>
+  );
 }

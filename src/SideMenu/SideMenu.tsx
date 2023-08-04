@@ -14,7 +14,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Outlet } from 'react-router-dom';
-import { mainListItems, secondaryListItems } from './listItems';
+import { MainListItems, secondaryListItems } from './listItems';
+import { Checklist } from '@mui/icons-material';
 
 const drawerWidth: number = 240;
 
@@ -45,34 +46,33 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
+  '& .MuiDrawer-paper': {
+    position: 'relative',
+    whiteSpace: 'nowrap',
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    boxSizing: 'border-box',
+    ...(!open && {
+      overflowX: 'hidden',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
+        duration: theme.transitions.duration.leavingScreen,
       }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
+      width: theme.spacing(7),
+      [theme.breakpoints.up('sm')]: {
+        width: theme.spacing(9),
+      },
+    }),
+  },
+}));
 
 export function SideMenu() {
   const [open, setOpen] = React.useState(true);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -98,18 +98,12 @@ export function SideMenu() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            sx={{ flexGrow: 1 }}
-          >
+          <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
             Covid Cases
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
+              <Checklist />
             </Badge>
           </IconButton>
         </Toolbar>
@@ -129,7 +123,7 @@ export function SideMenu() {
         </Toolbar>
         <Divider />
         <List component="nav">
-          {mainListItems}
+          <MainListItems />
           <Divider sx={{ my: 1 }} />
           {secondaryListItems}
         </List>
@@ -137,10 +131,7 @@ export function SideMenu() {
       <Box
         component="main"
         sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
+          backgroundColor: (theme) => (theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900]),
           flexGrow: 1,
           height: '100vh',
           overflow: 'auto',

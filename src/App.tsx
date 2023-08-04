@@ -6,7 +6,7 @@ import './App.css';
 import createAppBrowserRouter from './AppRoutes';
 import './mui';
 
-const router = createAppBrowserRouter()
+const router = createAppBrowserRouter();
 const defaultTheme = createTheme();
 
 const apolloClient = new ApolloClient({
@@ -17,10 +17,10 @@ const apolloClient = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={apolloClient}>
-    <ThemeProvider theme={defaultTheme}>
-      <CssBaseline />
-      <RouterProvider router={router} />
-    </ThemeProvider>
+      <ThemeProvider theme={defaultTheme}>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </ApolloProvider>
   );
 }

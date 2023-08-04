@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -35,11 +31,8 @@
     //     "src/generated/graphql-hooks"
     //   ]
     // },
-    "jsxImportSource": "react",
+    "jsxImportSource": "react"
   },
-  "include": [
-    "src",
-    "generated/**/index.ts"
-  ],
+  "include": ["src", "generated/**/index.ts"],
   "extends": "./tsconfig.paths.json"
 }

@@ -1,4 +1,3 @@
-
 query countryCovidTableData($countryCovidDataInput: CountryCovidDataInput!) {
   countryCovidTableData(countryCovidDataInput: $countryCovidDataInput) {
     id
