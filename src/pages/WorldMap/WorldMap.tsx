@@ -9,24 +9,18 @@ import { useMapboxChoroplethMap } from './use-mapbox-choropleth-map';
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_GL_TOKEN || '';
 
 const StyledDiv = styled('div')({
-  height: '100%',
+  height: '100vh',
 });
 
 export function WorldMap() {
-  const { countries, loading, covidDataByCountryIso } = useCountriesCovidApiQuery({});
+  const { countries, loading, covidDataByCountryIso } = useCountriesCovidApiQuery({start: new Date('2020-01-01'), end: new Date('2021-01-01')});
   const { mapContainer, map, mapHasLoaded } = useMapboxChoroplethMap();
 
   useClickRedirectToCountryData(map);
 
   React.useEffect(() => {
-    console.log(
-      `WorldMap choropleth effect mapHasLoaded=${mapHasLoaded} mapCurrentNotNull=${
-        map.current !== null
-      } NotLoading=${!loading} countries=${!!countries}}`,
-    );
-    console.log(`WorldMap choropleth effect ${!!(map.current !== null && mapHasLoaded && !loading && countries)}`);
     if (map.current !== null && mapHasLoaded && !loading && countries) {
-      updateChoroplethColors(map.current, countries, 'newCases');
+      updateChoroplethColors(map.current, countries, 'totalCases');
     }
   }, [map, mapHasLoaded, countries, loading]);
 

@@ -6,6 +6,34 @@ query countryCovidData($countryCovidDataInput: CountryCovidDataInput!) {
     covidCases {
       date
       newCases
+      totalCases
+    }
+    covidDeaths {
+      date
+      newDeaths
+      totalDeaths
+    }
+    covidHospitalizations {
+      date
+      hospPatients
+      icuPatients
+      weeklyHospAdmissions
+      weeklyIcuAdmissions
+    }
+    covidTests {
+      date
+      newTests
+      positiveRate
+      testsPerCase
+      totalTests
+    }
+    covidVaccinations {
+      date
+      newVaccinations
+      peopleFullyVaccinated
+      peopleVaccinated
+      totalBoosters
+      totalVaccinations
     }
   }
 }

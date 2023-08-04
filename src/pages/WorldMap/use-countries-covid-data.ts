@@ -11,7 +11,7 @@ export function useCountriesCovidApiQuery(countryCovidDataInput: CountryCovidDat
 
   const countries = response.data?.countryCovidData;
 
-  console.log(`countries api query returned ${countries?.length} countries`);
+  console.log(`countries api query returned ${countries?.length} countries. Error=${response.error}`);
   return React.useMemo(() => {
     const covidDataByCountryIso: Partial<CovidDataByCountryIsoDictionary> = {};
 

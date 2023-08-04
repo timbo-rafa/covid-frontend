@@ -24,7 +24,7 @@ export function useMapboxChoroplethMap() {
     });
 
     map.current.on('load', () => {
-      console.log(`map.on('load') mapRefCurrentNull=${map.current === null}`);
+      console.log(`mapbox map has loaded.`);
       if (!map.current) {
         return;
       }

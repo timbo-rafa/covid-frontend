@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Outlet } from 'react-router-dom';
 import { MainListItems, secondaryListItems } from './listItems';
-import { Checklist } from '@mui/icons-material';
+import { Checklist, FilterList } from '@mui/icons-material';
 
 const drawerWidth: number = 240;
 
@@ -71,7 +71,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 }));
 
 export function SideMenu() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -103,7 +103,7 @@ export function SideMenu() {
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
-              <Checklist />
+              <FilterList />
             </Badge>
           </IconButton>
         </Toolbar>
