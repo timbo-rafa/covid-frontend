@@ -1,1 +1,1 @@
-export * from './countries-iso-3'
+export * from './countries-iso-3';

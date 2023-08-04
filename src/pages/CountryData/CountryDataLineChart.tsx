@@ -1,15 +1,15 @@
+import { colorPalette } from "@color-utils"
 import { Skeleton, Typography, styled } from "@mui/material"
 import queryString from "query-string"
 import React from "react"
 import { useLocation } from "react-router-dom"
-import { Label, Legend, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
+import { Label, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 import { useCountryCovidTableDataApiQuery } from "./use-country-covid-table-data"
-import { colorPalette } from "@color-utils"
 
 function useCountryIdsFromQueryString() {
-  const location  = useLocation()
+  const location = useLocation()
   return React.useMemo(() => {
-    const qs = queryString.parse(location.search, {arrayFormat: 'comma'})
+    const qs = queryString.parse(location.search, { arrayFormat: 'comma' })
 
     console.log('qs=' + qs.countryIds);
     if (typeof qs.countryIds === 'string') {
@@ -19,16 +19,16 @@ function useCountryIdsFromQueryString() {
       const defaultToCanadaId = ['38']
       return defaultToCanadaId
     }
-    return qs.countryIds.filter((id) : id is string=> typeof id === 'string') 
+    return qs.countryIds.filter((id): id is string => typeof id === 'string')
   }, [location])
 }
 const StyledDiv = styled('div')({
   height: '500px'
 })
 
-export function CountryDataLineChart() {
+export function CountryDataLineChart({selectedFields}:{ selectedFields: string[]}) {
   const countryIds = useCountryIdsFromQueryString()
-  const {countryCovidTableData, loading} = useCountryCovidTableDataApiQuery({countryIds: countryIds })
+  const { countryCovidTableData, loading } = useCountryCovidTableDataApiQuery({ countryIds: countryIds })
 
   if (loading) {
     return <Skeleton height={500} width={500}>
@@ -41,34 +41,12 @@ export function CountryDataLineChart() {
       No data found
     </span>
   }
-  const selectedFields = ['newCases', 'newDeaths',
-
-  
-  'hospPatients'
-  ,'icuPatients'
-  ,'weeklyHospAdmissions'
-  ,'weeklyIcuAdmissions'
-  ,'newTests'
-  ,'positiveRate'
-  ,'testsPerCase'
-  ,'newVaccinations'
-  ,'peopleFullyVaccinated'
-  ,'peopleVaccinated'
-]
-const colorPaletteValues = Object.values(colorPalette)
-
-const selectedTotalFields = [
-  'totalCases'
-  ,'totalDeaths'
-  ,'totalTests'
-  ,'totalBoosters'
-  ,'totalVaccinations'
-]
+  const colorPaletteValues = Object.values(colorPalette)
 
   return (
     <React.Fragment>
-    <Typography component="h2" variant="h6" color="primary" gutterBottom>
-      Covid Data
+      <Typography component="h2" variant="h6" color="primary" gutterBottom textAlign={'center'}>
+        Covid Data
       </Typography>
       <ResponsiveContainer>
         <LineChart
@@ -95,8 +73,9 @@ const selectedTotalFields = [
             >
             </Label>
           </YAxis>
-          ({selectedTotalFields.map((field, i) => <Line id={field} dataKey={field} color={colorPaletteValues[i]}/>)})
-          <Legend/>
+          ({selectedFields.map((field, i) => <Line key={field} dataKey={field} stroke={colorPaletteValues[i]}/>)})
+          <Tooltip />
+          <Legend />
         </LineChart>
       </ResponsiveContainer>
     </React.Fragment>

@@ -1,12 +1,12 @@
-import mapboxgl from "mapbox-gl";
-import React from "react";
-import { addChoroplethLayer } from "./add-choropleth-layer";
-import { addHoverLayer } from "./add-hover-layer";
+import mapboxgl from 'mapbox-gl';
+import React from 'react';
+import { addChoroplethLayer } from './add-choropleth-layer';
+import { addHoverLayer } from './add-hover-layer';
 
 export function useMapboxChoroplethMap() {
   const mapContainer = React.useRef(null);
   const map = React.useRef<mapboxgl.Map | null>(null);
-  const [mapHasLoaded, setMapHasLoaded] = React.useState(false)
+  const [mapHasLoaded, setMapHasLoaded] = React.useState(false);
   React.useEffect(() => {
     const lng = 0;
     const lat = 10;
@@ -20,21 +20,20 @@ export function useMapboxChoroplethMap() {
       center: [lng, lat],
       zoom: zoom,
       maxZoom: 4,
-      projection: { name: 'mercator' }
+      projection: { name: 'mercator' },
     });
-    
+
     map.current.on('load', () => {
-      console.log(`map.on('load') mapRefCurrentNull=${map.current === null}`)
+      console.log(`map.on('load') mapRefCurrentNull=${map.current === null}`);
       if (!map.current) {
         return;
       }
       addChoroplethLayer(map.current);
       addHoverLayer(map.current);
 
-      setMapHasLoaded(true)
+      setMapHasLoaded(true);
     });
-
   }, [map, mapContainer]);
 
-  return { mapContainer, map, mapHasLoaded }
+  return { mapContainer, map, mapHasLoaded };
 }

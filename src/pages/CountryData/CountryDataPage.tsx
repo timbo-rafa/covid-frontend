@@ -55,7 +55,38 @@ export function CountryDataPage() {
             height: 500,
           }}
         >
-          <CountryDataLineChart />
+          <CountryDataLineChart selectedFields={['totalCases'
+, 'totalDeaths'
+, 'totalTests'
+, 'totalBoosters'
+, 'totalVaccinations'
+          ]}/>
+        </Paper>
+      </Grid>
+      <Grid item xs={12} md={12} lg={12}>
+        <Paper
+          sx={{
+            p: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            height: 500,
+          }}
+        >
+          <CountryDataLineChart selectedFields={[
+
+'newCases', 'newDeaths',
+    'hospPatients'
+    , 'icuPatients'
+    , 'weeklyHospAdmissions'
+    , 'weeklyIcuAdmissions'
+    , 'newTests'
+    , 'positiveRate'
+    , 'testsPerCase'
+    , 'newVaccinations'
+    , 'peopleFullyVaccinated'
+    , 'peopleVaccinated'
+
+          ]}/>
         </Paper>
       </Grid>
       </Grid>

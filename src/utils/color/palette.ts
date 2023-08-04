@@ -8,5 +8,5 @@ export const colorPalette = {
   yellow: '#FCED23',
   gold: '#E6AE2C',
   orange: '#FC7F23',
-  red: '#F52714'
-}
+  red: '#F52714',
+};

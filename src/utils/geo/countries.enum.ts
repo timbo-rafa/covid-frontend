@@ -54,7 +54,7 @@ export enum CountriesEnum {
   COD = 'Congo Democratic Republic',
   COK = 'Cook Islands',
   CRI = 'Costa Rica',
-  CIV = 'Cote D\'Ivoire',
+  CIV = "Cote D'Ivoire",
   HRV = 'Croatia',
   CUB = 'Cuba',
   CUW = 'Curacao',
@@ -118,7 +118,7 @@ export enum CountriesEnum {
   KEN = 'Kenya',
   KIR = 'Kiribati',
   KOR = 'Korea, Republic of',
-  PRK = 'Korea, Democratic People\'s Republic of',
+  PRK = "Korea, Democratic People's Republic of",
   KWT = 'Kuwait',
   KGZ = 'Kyrgyzstan',
   LAO = 'Lao Peoples Democratic Republic',
@@ -249,5 +249,5 @@ export enum CountriesEnum {
   XKX = 'Kosovo',
   YEM = 'Yemen',
   ZMB = 'Zambia',
-  ZWE = 'Zimbabwe'
-} 
+  ZWE = 'Zimbabwe',
+}

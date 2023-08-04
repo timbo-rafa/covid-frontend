@@ -1,5 +1,5 @@
 export type CovidDataType = {
-  newCases: number | null
+  newCases: number | null;
   //countryId: number;
   //countryIsoCode: CountryIso3;
   // date: string//Date
@@ -65,4 +65,4 @@ export type CovidDataType = {
   // excessMortalityCumulative: number | null
   // excessMortality: number | null
   // excessMortalityCumulativePerMillion: number | null
-}
+};
