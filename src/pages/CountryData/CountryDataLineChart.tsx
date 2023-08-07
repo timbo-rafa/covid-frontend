@@ -5,6 +5,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Label, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { useCountryCovidTableDataApiQuery } from './use-country-covid-table-data';
+import { formatToDate } from '@time-utils';
 
 function useCountryIdsFromQueryString() {
   const location = useLocation();
@@ -54,7 +55,7 @@ export function CountryDataLineChart({ selectedFields }: { selectedFields: strin
             left: 24,
           }}
         >
-          <XAxis dataKey="date" angle={270} />
+          <XAxis dataKey="date" angle={270} tickFormatter={date => formatToDate(date)} />
           <YAxis>
             <Label
               angle={270}

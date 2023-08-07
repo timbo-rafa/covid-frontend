@@ -5,6 +5,7 @@ module.exports = {
       '@geo-utils': path.resolve(__dirname, 'src/utils/geo'),
       '@type-utils': path.resolve(__dirname, 'src/utils/type'),
       '@color-utils': path.resolve(__dirname, 'src/utils/color'),
+      '@time-utils': path.resolve(__dirname, 'src/utils/time'),
       '@covid-api': path.resolve(__dirname, 'src/covid-api'),
       '@generated-graphql-hooks': path.resolve('./src/generated/graphql-hooks'),
     },

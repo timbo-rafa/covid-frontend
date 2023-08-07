@@ -2,6 +2,7 @@ query countryCovidTableData($countryCovidDataInput: CountryCovidDataInput!) {
   countryCovidTableData(countryCovidDataInput: $countryCovidDataInput) {
     id
     name
+    date
     isoCode
     newCases
     totalCases

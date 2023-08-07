@@ -6,6 +6,7 @@ import { Label, Legend, Line, LineChart, ResponsiveContainer, XAxis, YAxis } fro
 import { useCountryCovidTableDataApiQuery } from './use-country-covid-table-data';
 import { Title } from '@mui/icons-material';
 import { CountryDataLineChart } from './CountryDataLineChart';
+import { CountryDataTable } from './CountryDataTable';
 
 function useCountryIdsFromQueryString() {
   const location = useLocation();
@@ -80,6 +81,33 @@ export function CountryDataPage() {
                 'peopleFullyVaccinated',
                 'peopleVaccinated',
               ]}
+            />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={12} lg={12}>
+          <Paper
+            sx={{
+              p: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              height: 500,
+            }}
+          >
+            <CountryDataTable
+              // selectedFields={[
+              //   'newCases',
+              //   'newDeaths',
+              //   'hospPatients',
+              //   'icuPatients',
+              //   'weeklyHospAdmissions',
+              //   'weeklyIcuAdmissions',
+              //   'newTests',
+              //   'positiveRate',
+              //   'testsPerCase',
+              //   'newVaccinations',
+              //   'peopleFullyVaccinated',
+              //   'peopleVaccinated',
+              // ]}
             />
           </Paper>
         </Grid>

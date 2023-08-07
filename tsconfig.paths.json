@@ -5,8 +5,9 @@
       "@geo-utils": ["src/utils/geo"],
       "@type-utils": ["src/utils/type"],
       "@color-utils": ["src/utils/color"],
+      "@time-utils": ["src/utils/time"],
       "@covid-api": ["src/covid-api"],
-      "@generated-graphql-hooks": ["src/generated/graphql-hooks"]
+      "@generated-graphql-hooks": ["src/generated/graphql-hooks"],
     }
   }
 }
