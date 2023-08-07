@@ -29,7 +29,7 @@ const StyledDiv = styled('div')({
 
 export function CountryDataLineChart({ selectedFields }: { selectedFields: string[] }) {
   const countryIds = useCountryIdsFromQueryString();
-  const { countryCovidTableData, loading } = useCountryCovidTableDataApiQuery({ countryIds: countryIds });
+  const { countryCovidTableData, loading } = useCountryCovidTableDataApiQuery({ countryIds: countryIds }, new Set<string>(selectedFields) as any);
 
   if (loading) {
     return <Skeleton height={500} width={500}></Skeleton>;

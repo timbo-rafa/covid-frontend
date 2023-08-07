@@ -7,6 +7,7 @@ import { useCountryCovidTableDataApiQuery } from './use-country-covid-table-data
 import { Title } from '@mui/icons-material';
 import { CountryDataLineChart } from './CountryDataLineChart';
 import { CountryDataTable } from './CountryDataTable';
+import { AvailableCountryCovidTableFields } from './available-table-fields';
 
 function useCountryIdsFromQueryString() {
   const location = useLocation();
@@ -30,7 +31,8 @@ const StyledDiv = styled('div')({
 
 export function CountryDataPage() {
   const countryIds = useCountryIdsFromQueryString();
-  const { countryCovidTableData, loading } = useCountryCovidTableDataApiQuery({ countryIds: countryIds });
+  const selectedFields = new Set<AvailableCountryCovidTableFields>(['newCases', 'totalDeaths'])
+  const { countryCovidTableData, loading } = useCountryCovidTableDataApiQuery({ countryIds: countryIds }, selectedFields);
 
   if (loading) {
     return <Skeleton height={500} width={500}></Skeleton>;

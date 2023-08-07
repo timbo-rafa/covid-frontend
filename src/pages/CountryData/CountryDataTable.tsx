@@ -4,6 +4,7 @@ import { useCountryCovidTableDataApiQuery } from './use-country-covid-table-data
 import React from 'react'
 import moment from 'moment'
 import { formatToDate } from '@time-utils'
+import { setWithAllCountryCovidTableFields } from './available-table-fields'
 
 const columnHelper = createColumnHelper<CountryCovidTableDto>()
 
@@ -34,7 +35,7 @@ const columns = [
 ]
 
 export function CountryDataTable() {
-  const { countryCovidTableData, loading } = useCountryCovidTableDataApiQuery({ start: new Date('2020-01-01'), end: new Date('2021-01-01') })
+  const { countryCovidTableData, loading } = useCountryCovidTableDataApiQuery({ start: new Date('2020-01-01'), end: new Date('2021-01-01')}, setWithAllCountryCovidTableFields)
 
   const table = useReactTable({ data: countryCovidTableData || [], columns, getCoreRowModel: getCoreRowModel() })
   const rerender = React.useReducer(() => ({}), {})[1]

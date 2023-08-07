@@ -13,7 +13,7 @@ const StyledDiv = styled('div')({
 });
 
 export function WorldMap() {
-  const { countries, loading, covidDataByCountryIso } = useCountriesCovidApiQuery({start: new Date('2020-01-01'), end: new Date('2021-01-01')});
+  const { countries, loading, covidDataByCountryIso } = useCountriesCovidApiQuery({});
   const { mapContainer, map, mapHasLoaded } = useMapboxChoroplethMap();
 
   useClickRedirectToCountryData(map);

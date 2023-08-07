@@ -13,7 +13,7 @@ export function updateChoroplethColors(map: mapboxgl.Map, countries: CountryDto[
   let minValue = countries[0].covidCases[0]?.[dataColumn] || 0;
   let maxValue = minValue;
   for (const country of countries) {
-    const value = Number(country.covidCases[0]?.[dataColumn]) || Math.ceil(255 * Math.random());
+    const value = Number(country.covidCases[0]?.[dataColumn]);
     valueByCountry[country.isoCode] = value
 
     if (value > maxValue) {
@@ -24,7 +24,7 @@ export function updateChoroplethColors(map: mapboxgl.Map, countries: CountryDto[
       minValue = value;
     }
   }
-  console.log(JSON.stringify({maxValue, minValue, valueByCountry}))
+  console.log(JSON.stringify({maxValue, minValue,dataColumn, valueByCountry}))
 
   const matchExpression = getMatchExpression(valueByCountry, minValue, maxValue);
 
