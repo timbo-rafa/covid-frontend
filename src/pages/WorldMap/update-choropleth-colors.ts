@@ -10,7 +10,7 @@ export function updateChoroplethColors(map: mapboxgl.Map, countries: CountryDto[
 
   const valueByCountry: Record<string, number | undefined | null> = {};
 
-  let minValue = countries[0].covidCases[0]?.[dataColumn] || 0;
+  let minValue = Number(countries[0].covidCases[0]?.[dataColumn]) || 0;
   let maxValue = minValue;
   for (const country of countries) {
     const value = Number(country.covidCases[0]?.[dataColumn]);

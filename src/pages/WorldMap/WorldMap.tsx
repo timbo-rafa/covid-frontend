@@ -3,7 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import React from 'react';
 import { updateChoroplethColors } from './update-choropleth-colors';
 import { useClickRedirectToCountryData } from './use-click-redirect-to-country-data';
-import { useCountriesCovidApiQuery } from './use-countries-covid-data';
+import { useCountriesCovidApiQuery } from './use-countries-covid-api-query';
 import { useMapboxChoroplethMap } from './use-mapbox-choropleth-map';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_GL_TOKEN || '';

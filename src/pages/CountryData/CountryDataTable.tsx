@@ -1,10 +1,11 @@
 import { CountryCovidTableDto } from '@generated-graphql-hooks'
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import { useCountryCovidTableDataApiQuery } from './use-country-covid-table-data'
+import { useCountryCovidTableApiQuery } from './use-country-covid-table-api-query'
 import React from 'react'
 import moment from 'moment'
 import { formatToDate } from '@time-utils'
-import { setWithAllCountryCovidTableFields } from './available-table-fields'
+import { AvailableCountryCovidTableFields, setWithAllCountryCovidTableFields } from './available-table-fields'
+import { useCountryIdsFromQueryString } from './use-country-ids-query-string'
 
 const columnHelper = createColumnHelper<CountryCovidTableDto>()
 
@@ -12,19 +13,26 @@ const columns = [
   columnHelper.accessor('name', {
     cell: info => info.getValue(),
     header: 'Country',
-    footer: info => info.column.id,
   }),
   columnHelper.accessor('date', {
-    cell: info => formatToDate(info.getValue()),
+    cell: info => formatToDate(info.getValue<Date>()),
     header: 'Date',
-    footer: info => info.column.id,
-  })
-  ,
+  }),
   columnHelper.accessor('newCases', {
     cell: info => info.getValue(),
     header: 'New Cases',
-    footer: info => info.column.id,
-
+  }),
+  columnHelper.accessor('totalCases', {
+    cell: info => info.getValue(),
+    header: 'Total Cases',
+  }),
+  columnHelper.accessor('newDeaths', {
+    cell: info => info.getValue(),
+    header: 'New Deaths',
+  }),
+  columnHelper.accessor('totalDeaths', {
+    cell: info => info.getValue(),
+    header: 'Total Deaths',
   }),
   // columnHelper.accessor(row => row.lastName, {
   //   id: 'lastName',
@@ -34,9 +42,14 @@ const columns = [
   // }),
 ]
 
-export function CountryDataTable() {
-  const { countryCovidTableData, loading } = useCountryCovidTableDataApiQuery({ start: new Date('2020-01-01'), end: new Date('2021-01-01')}, setWithAllCountryCovidTableFields)
+type CountryDataTableProps = {
+  selectedFields: Set<AvailableCountryCovidTableFields>;
+  countryCovidTableData: CountryCovidTableDto[];
+}
 
+export function CountryDataTable({countryCovidTableData}: CountryDataTableProps) {
+  
+  console.log("🚀 | CountryDataTable | countryCovidTableData:", countryCovidTableData)
   const table = useReactTable({ data: countryCovidTableData || [], columns, getCoreRowModel: getCoreRowModel() })
   const rerender = React.useReducer(() => ({}), {})[1]
 

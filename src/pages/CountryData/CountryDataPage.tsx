@@ -1,38 +1,15 @@
-import { Container, Grid, Paper, Skeleton, styled } from '@mui/material';
-import queryString from 'query-string';
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { Label, Legend, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
-import { useCountryCovidTableDataApiQuery } from './use-country-covid-table-data';
-import { Title } from '@mui/icons-material';
+import { Container, Grid, Paper, Skeleton } from '@mui/material';
 import { CountryDataLineChart } from './CountryDataLineChart';
 import { CountryDataTable } from './CountryDataTable';
 import { AvailableCountryCovidTableFields } from './available-table-fields';
+import { useCountryCovidTableApiQuery } from './use-country-covid-table-api-query';
+import { useCountryIdsFromQueryString } from './use-country-ids-query-string';
 
-function useCountryIdsFromQueryString() {
-  const location = useLocation();
-  return React.useMemo(() => {
-    const qs = queryString.parse(location.search, { arrayFormat: 'comma' });
-
-    console.log('qs=' + qs.countryIds);
-    if (typeof qs.countryIds === 'string') {
-      return [qs.countryIds];
-    }
-    if (!qs.countryIds) {
-      const defaultToCanadaId = ['38'];
-      return defaultToCanadaId;
-    }
-    return qs.countryIds.filter((id): id is string => typeof id === 'string');
-  }, [location]);
-}
-const StyledDiv = styled('div')({
-  height: '500px',
-});
 
 export function CountryDataPage() {
   const countryIds = useCountryIdsFromQueryString();
-  const selectedFields = new Set<AvailableCountryCovidTableFields>(['newCases', 'totalDeaths'])
-  const { countryCovidTableData, loading } = useCountryCovidTableDataApiQuery({ countryIds: countryIds }, selectedFields);
+  const selectedFields = new Set<AvailableCountryCovidTableFields>(['totalCases', 'totalDeaths', 'totalTests', 'totalBoosters', 'totalVaccinations'])
+  const { countryCovidTableData, loading } = useCountryCovidTableApiQuery({ countryIds: countryIds }, selectedFields);
 
   if (loading) {
     return <Skeleton height={500} width={500}></Skeleton>;
@@ -51,11 +28,12 @@ export function CountryDataPage() {
               p: 1,
               display: 'flex',
               flexDirection: 'column',
-              height: 500,
+              height: 700,
             }}
           >
             <CountryDataLineChart
-              selectedFields={['totalCases', 'totalDeaths', 'totalTests', 'totalBoosters', 'totalVaccinations']}
+              countryCovidTableData={countryCovidTableData}
+              selectedFields={selectedFields}
             />
           </Paper>
         </Grid>
@@ -65,51 +43,26 @@ export function CountryDataPage() {
               p: 1,
               display: 'flex',
               flexDirection: 'column',
-              height: 500,
-            }}
-          >
-            <CountryDataLineChart
-              selectedFields={[
-                'newCases',
-                'newDeaths',
-                'hospPatients',
-                'icuPatients',
-                'weeklyHospAdmissions',
-                'weeklyIcuAdmissions',
-                'newTests',
-                'positiveRate',
-                'testsPerCase',
-                'newVaccinations',
-                'peopleFullyVaccinated',
-                'peopleVaccinated',
-              ]}
-            />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={12} lg={12}>
-          <Paper
-            sx={{
-              p: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              height: 500,
+
             }}
           >
             <CountryDataTable
-              // selectedFields={[
-              //   'newCases',
-              //   'newDeaths',
-              //   'hospPatients',
-              //   'icuPatients',
-              //   'weeklyHospAdmissions',
-              //   'weeklyIcuAdmissions',
-              //   'newTests',
-              //   'positiveRate',
-              //   'testsPerCase',
-              //   'newVaccinations',
-              //   'peopleFullyVaccinated',
-              //   'peopleVaccinated',
-              // ]}
+              selectedFields={selectedFields}
+              countryCovidTableData={countryCovidTableData}
+            // selectedFields={[
+            //   'newCases',
+            //   'newDeaths',
+            //   'hospPatients',
+            //   'icuPatients',
+            //   'weeklyHospAdmissions',
+            //   'weeklyIcuAdmissions',
+            //   'newTests',
+            //   'positiveRate',
+            //   'testsPerCase',
+            //   'newVaccinations',
+            //   'peopleFullyVaccinated',
+            //   'peopleVaccinated',
+            // ]}
             />
           </Paper>
         </Grid>

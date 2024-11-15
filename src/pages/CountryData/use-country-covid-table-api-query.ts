@@ -5,14 +5,45 @@ import { AvailableCountryCovidTableFields } from './available-table-fields';
 
 export type CovidDataByCountryIsoDictionary = Record<CountryIso3, CountryDto>;
 
-export function useCountryCovidTableDataApiQuery(countryCovidDataInput: CountryCovidDataInput, selectedFields: Set<AvailableCountryCovidTableFields>) {
+export type CountryCovidTableRow = {
+  date: any;
+  id: string;
+  isoCode: string;
+  name: string;
+  hospPatients?: number | null;
+  icuPatients?: number | null;
+  newCases?: number | null;
+  newDeaths?:number | null;
+  newTests?: number | null;
+  newVaccinations?: number | null;
+  peopleFullyVaccinated?: string | null;
+  peopleVaccinated?: string | null;
+  positiveRate?: number | null;
+  testsPerCase?: number | null;
+  totalBoosters?: string | null;
+  totalCases?: string | null;
+  totalDeaths?: string | null;
+  totalTests?: string | null;
+  totalVaccinations?: string | null;
+  weeklyHospAdmissions?: number | null;
+  weeklyIcuAdmissions?: number | null;
+};
+export function useCountryCovidTableApiQuery(countryCovidDataInput: CountryCovidDataInput, selectedFields: Set<AvailableCountryCovidTableFields>) {
   const response = useCountryCovidTableDataQuery({
-    variables: { countryCovidDataInput, ...selectFieldsToInclude(selectedFields)},
+    variables: { countryCovidDataInput, ...selectFieldsToInclude(selectedFields),
+    },
     skip: selectedFields.size === 0
   });
 
-  console.log('🚀 | useCountryCovidTableDataApiQuery | error then data:', response.error, response.data?.countryCovidTableData);
-  const countryCovidTableData = response.data?.countryCovidTableData;
+  const amountOfDates: Record<number, number> = {}
+  response.data?.countryCovidTableData.forEach(({ isoCode, date, newCases, totalDeaths }) => {
+    const ts = new Date(date).getTime()
+    amountOfDates[ts] = amountOfDates[ts] || 0
+    amountOfDates[ts]++;
+  })
+
+  console.log(`countryCovidTableData error,data`, response.error,response.data?.countryCovidTableData)
+  const countryCovidTableData: CountryCovidTableRow[] | undefined = response.data?.countryCovidTableData;
 
   return React.useMemo(() => {
     return { countryCovidTableData, loading: response.loading };

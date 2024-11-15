@@ -4,36 +4,21 @@ import queryString from 'query-string';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Label, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { useCountryCovidTableDataApiQuery } from './use-country-covid-table-data';
+import { useCountryCovidTableApiQuery } from './use-country-covid-table-api-query';
 import { formatToDate } from '@time-utils';
+import { CountryCovidTableDto } from '@generated-graphql-hooks';
+import { AvailableCountryCovidTableFields } from './available-table-fields';
 
-function useCountryIdsFromQueryString() {
-  const location = useLocation();
-  return React.useMemo(() => {
-    const qs = queryString.parse(location.search, { arrayFormat: 'comma' });
-
-    console.log('qs=' + qs.countryIds);
-    if (typeof qs.countryIds === 'string') {
-      return [qs.countryIds];
-    }
-    if (!qs.countryIds) {
-      const defaultToCanadaId = ['38'];
-      return defaultToCanadaId;
-    }
-    return qs.countryIds.filter((id): id is string => typeof id === 'string');
-  }, [location]);
+export type CountryDataLineChartProps = {
+  selectedFields: Set<AvailableCountryCovidTableFields>;
+  countryCovidTableData: CountryCovidTableDto[];
 }
-const StyledDiv = styled('div')({
-  height: '500px',
-});
 
-export function CountryDataLineChart({ selectedFields }: { selectedFields: string[] }) {
-  const countryIds = useCountryIdsFromQueryString();
-  const { countryCovidTableData, loading } = useCountryCovidTableDataApiQuery({ countryIds: countryIds }, new Set<string>(selectedFields) as any);
+export function CountryDataLineChart({ selectedFields, countryCovidTableData }: CountryDataLineChartProps) {
 
-  if (loading) {
-    return <Skeleton height={500} width={500}></Skeleton>;
-  }
+  // if (loading) {
+  //   return <Skeleton height={500} width={500}></Skeleton>;
+  // }
 
   if (!countryCovidTableData) {
     return <span>No data found</span>;
@@ -52,10 +37,10 @@ export function CountryDataLineChart({ selectedFields }: { selectedFields: strin
             top: 16,
             right: 16,
             bottom: 0,
-            left: 24,
+            left: 16,
           }}
         >
-          <XAxis dataKey="date" angle={270} tickFormatter={date => formatToDate(date)} />
+          <XAxis dataKey="date" tickFormatter={date => formatToDate(date)}/>
           <YAxis>
             <Label
               angle={270}
@@ -66,7 +51,7 @@ export function CountryDataLineChart({ selectedFields }: { selectedFields: strin
             ></Label>
           </YAxis>
           (
-          {selectedFields.map((field, i) => (
+          {Array.from(selectedFields).map((field, i) => (
             <Line key={field} dataKey={field} stroke={colorPaletteValues[i]} />
           ))}
           )

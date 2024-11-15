@@ -1,5 +1,4 @@
 export const colorPalette = {
-  pink: '#FA46CE',
   purple: '#8654D6',
   indigo: '#6897ED',
   turquoise: '#54D6CB',
@@ -9,4 +8,5 @@ export const colorPalette = {
   gold: '#E6AE2C',
   orange: '#FC7F23',
   red: '#F52714',
+  pink: '#FA46CE',
 };
