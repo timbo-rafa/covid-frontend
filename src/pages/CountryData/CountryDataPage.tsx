@@ -2,14 +2,13 @@ import { Container, Grid, Paper, Skeleton } from '@mui/material';
 import { CountryDataLineChart } from './CountryDataLineChart';
 import { CountryDataTable } from './CountryDataTable';
 import { AvailableCountryCovidTableFields } from './available-table-fields';
-import { useCountryCovidTableApiQuery } from './use-country-covid-table-api-query';
 import { useCountryIdsFromQueryString } from './use-country-ids-query-string';
 
 
 export function CountryDataPage() {
   const countryIds = useCountryIdsFromQueryString();
   const selectedFields = new Set<AvailableCountryCovidTableFields>(['totalCases', 'totalDeaths', 'totalTests', 'totalBoosters', 'totalVaccinations'])
-  const { countryCovidTableData, loading } = useCountryCovidTableApiQuery({ countryIds: countryIds }, selectedFields);
+  const { countryCovidTableData, loading } = {} as any;//useCountryCovidTableApiQuery({ countryIds: countryIds }, selectedFields);
 
   if (loading) {
     return <Skeleton height={500} width={500}></Skeleton>;

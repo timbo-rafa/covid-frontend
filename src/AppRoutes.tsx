@@ -11,7 +11,7 @@ export default function createAppBrowserRouter() {
       element: <SideMenu />,
       children: [
         {
-          path: '/world',
+          path: '/world/:selectedColumnName',
           element: <WorldMapPage />,
         },
         {

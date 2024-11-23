@@ -1,11 +1,11 @@
-import { CountryCovidTableDto } from '@generated-graphql-hooks'
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import { useCountryCovidTableApiQuery } from './use-country-covid-table-api-query'
 import React from 'react'
 import moment from 'moment'
 import { formatToDate } from '@time-utils'
 import { AvailableCountryCovidTableFields, setWithAllCountryCovidTableFields } from './available-table-fields'
 import { useCountryIdsFromQueryString } from './use-country-ids-query-string'
+
+type CountryCovidTableDto = any;
 
 const columnHelper = createColumnHelper<CountryCovidTableDto>()
 

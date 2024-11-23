@@ -4,10 +4,10 @@ import queryString from 'query-string';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Label, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { useCountryCovidTableApiQuery } from './use-country-covid-table-api-query';
 import { formatToDate } from '@time-utils';
-import { CountryCovidTableDto } from '@generated-graphql-hooks';
 import { AvailableCountryCovidTableFields } from './available-table-fields';
+
+type CountryCovidTableDto = any;
 
 export type CountryDataLineChartProps = {
   selectedFields: Set<AvailableCountryCovidTableFields>;

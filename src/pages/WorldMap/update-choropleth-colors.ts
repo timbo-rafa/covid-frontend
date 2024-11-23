@@ -1,20 +1,31 @@
-import { CountryCovidCasesDto, CountryDto } from '@generated-graphql-hooks';
 import { CountryIso3 } from '@geo-utils';
 import { getColorIntensity, noDataColor } from '@color-utils';
 import { choroplethLayerId } from './add-choropleth-layer';
 
-export function updateChoroplethColors(map: mapboxgl.Map, countries: CountryDto[], dataColumn: keyof CountryCovidCasesDto) {
-  if (countries.length === 0) {
+export function updateChoroplethColors<DataType extends Record<string, string | number>>(
+  map: mapboxgl.Map,
+  data: DataType[],
+  selectedColumnName: keyof DataType,
+  countryIsoCodeColumn = 'code',
+) {
+  if (data.length === 0) {
+    return;
+  }
+
+  const columnFirstValue = Number(data[0][selectedColumnName] || 0);
+
+  if (Number.isNaN(columnFirstValue)) {
+    console.error('Selected column is not a number, skipping map coloring');
     return;
   }
 
   const valueByCountry: Record<string, number | undefined | null> = {};
 
-  let minValue = Number(countries[0].covidCases[0]?.[dataColumn]) || 0;
+  let minValue = columnFirstValue;
   let maxValue = minValue;
-  for (const country of countries) {
-    const value = Number(country.covidCases[0]?.[dataColumn]);
-    valueByCountry[country.isoCode] = value
+  for (const dataRow of data) {
+    const value = Number(dataRow[selectedColumnName]);
+    valueByCountry[dataRow[countryIsoCodeColumn]] = value;
 
     if (value > maxValue) {
       maxValue = value;
@@ -24,7 +35,7 @@ export function updateChoroplethColors(map: mapboxgl.Map, countries: CountryDto[
       minValue = value;
     }
   }
-  console.log(JSON.stringify({maxValue, minValue,dataColumn, valueByCountry}))
+  console.log(JSON.stringify({ maxValue, minValue, selectedColumnName, valueByCountry }));
 
   const matchExpression = getMatchExpression(valueByCountry, minValue, maxValue);
 
