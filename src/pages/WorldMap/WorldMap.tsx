@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom';
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_GL_TOKEN || '';
 
 const StyledDiv = styled('div')({
-  height: '100vh',
+  height: 'calc(100% - 64px)',
 });
 
 type CountryDataType = {
@@ -37,8 +37,6 @@ export function WorldMap() {
   }, [map, mapHasLoaded, data, isFetching, selectedColumnName]);
 
   return (
-    <StyledDiv>
       <StyledDiv ref={mapContainer} className="map-container" />
-    </StyledDiv>
   );
 }
