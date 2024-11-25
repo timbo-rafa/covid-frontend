@@ -1,2 +1,2 @@
-export * from './array-to-dictionary';
-export * from './assert-is-number';
+export * from './asserts';
+export * from './array';

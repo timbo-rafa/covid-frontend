@@ -1,4 +1,4 @@
-import { stringToCountryIso3 } from '@geo-utils';
+import { stringToCountryIso3 } from 'src/utils/geo';
 import mapboxgl from 'mapbox-gl';
 import React from 'react';
 import { hoverLayerId } from './add-hover-layer';

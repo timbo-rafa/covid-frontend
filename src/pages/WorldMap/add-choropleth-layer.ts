@@ -1,4 +1,4 @@
-import { noDataColor } from '@color-utils';
+import { noDataColor } from 'src/utils/color';
 import mapboxgl from 'mapbox-gl';
 
 export const choroplethLayerId = 'countries-join';

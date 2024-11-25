@@ -18,12 +18,21 @@
     "strictPropertyInitialization": false,
     "baseUrl": "./",
     // "paths": {
+    //   "@api-types" : [
+    //     "src/api/api.d.ts"
+    //   ],
     //   "@geo-utils": [
     //     "src/utils/geo"
     //   ],
     //   "@type-utils": [
     //     "src/utils/type"
     //   ],
+    //   "@color-utils": [
+    //     "src/utils/color"
+    //   ],
+    //   "@time-utils": [
+    //     "src/utils/time"
+    //   ]
     //   "@covid-api": [
     //     "src/covid-api"
     //   ],
@@ -33,6 +42,5 @@
     // },
     "jsxImportSource": "react"
   },
-  "include": ["src", "generated/**/index.ts"],
-  "extends": "./tsconfig.paths.json"
+  "include": ["src", "generated/**/index.ts"]
 }

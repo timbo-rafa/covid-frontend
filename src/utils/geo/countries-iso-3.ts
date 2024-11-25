@@ -11,3 +11,11 @@ export function stringToCountryIso3(string: string): CountryIso3 | null {
 
   return null;
 }
+
+export function validateCountryIsoCode(countryIsoString: string): asserts countryIsoString is CountryIso3 {
+  const isoCode = stringToCountryIso3(countryIsoString);
+
+  if (!isoCode) {
+    throw Error(`${isoCode} is not an iso 3 in enum`);
+  }
+}

@@ -1,7 +1,7 @@
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import React from 'react'
 import moment from 'moment'
-import { formatToDate } from '@time-utils'
+import { formatToDate } from 'src/utils/time'
 import { AvailableCountryCovidTableFields, setWithAllCountryCovidTableFields } from './available-table-fields'
 import { useCountryIdsFromQueryString } from './use-country-ids-query-string'
 

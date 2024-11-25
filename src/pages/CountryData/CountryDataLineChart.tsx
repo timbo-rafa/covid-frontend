@@ -1,10 +1,10 @@
-import { colorPalette } from '@color-utils';
+import { colorPalette } from 'src/utils/color';
 import { Skeleton, Typography, styled } from '@mui/material';
 import queryString from 'query-string';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Label, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { formatToDate } from '@time-utils';
+import { formatToDate } from 'src/utils/time';
 import { AvailableCountryCovidTableFields } from './available-table-fields';
 
 type CountryCovidTableDto = any;
