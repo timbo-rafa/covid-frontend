@@ -1,3 +1,3 @@
-.map-container {
-  height: 100%;
+.MuiBox-root {
+  overflow-y: hidden !important
 }

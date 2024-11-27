@@ -32,6 +32,7 @@ export function useMapboxChoroplethMap() {
       addHoverLayer(map.current);
 
       setMapHasLoaded(true);
+      map.current.resize();
     });
   }, [map, mapContainer]);
 

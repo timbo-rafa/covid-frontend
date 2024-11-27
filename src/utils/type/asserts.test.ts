@@ -1,4 +1,4 @@
-import { isDefined, isDictionaryOfNumbers } from './asserts';
+import { isDefined, isDictionaryOfNumbers, isEmptyObject } from './asserts';
 
 describe('isDefined', () => {
   test('should return true for defined values', () => {
@@ -49,5 +49,14 @@ describe('isDictionaryOfNumbers', () => {
       c: 3,
     };
     expect(isDictionaryOfNumbers(dictionary)).toBe(true);
+  });
+});
+
+describe('isEmptyObject', () => {
+  it('should return true for an empty object', () => {
+    expect(isEmptyObject({})).toBe(true);
+  });
+  it('should return false for an object with properties', () => {
+    expect(isEmptyObject({ a: 1 })).toBe(false);
   });
 });
