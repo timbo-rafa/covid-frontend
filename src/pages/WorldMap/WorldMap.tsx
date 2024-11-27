@@ -9,7 +9,12 @@ import { isEmptyObject } from 'src/utils/type';
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_GL_TOKEN || '';
 
 const FullHeightMap = styled('div')({
-  height: '100%',
+  maxHeight: 'inherit',
+  gridColumnStart: 1,
+  gridColumnEnd: 10,
+  gridRowStart: 1,
+  gridRowEnd: 11,
+  backgroundColor: 'green'
 });
 
 export type WorldMapProps = {

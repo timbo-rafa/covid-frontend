@@ -1,9 +1,5 @@
 import { Box, styled } from '@mui/material';
-import mapboxgl from 'mapbox-gl';
 import React from 'react';
-import { updateChoroplethColors } from './update-choropleth-colors';
-import { useClickRedirectToCountryData } from './use-click-redirect-to-country-data';
-import { useMapboxChoroplethMap } from './use-mapbox-choropleth-map';
 import { useTableApiQuery } from './use-table-api-query.hook';
 import { useParams } from 'react-router-dom';
 import { DateSlider } from 'src/components/DateSlider';
@@ -12,17 +8,17 @@ import { DatasetConfig } from 'src/api/api';
 import { WorldMap } from './WorldMap';
 
 const MapContainer = styled('div')({
-  height: '100%',
-  position: 'relative',
+  height: 'calc(100% - 64px)',
+  display: 'grid',
 });
 
-const MapDateSlider = styled(DateSlider)({
-  backgroundColor: 'red',
-  width: '30%',
-  bottom: '10px',
-  right: '10px',
-  position: 'absolute',
-});
+const MapControlBox = styled(Box)({
+  backgroundColor: 'rgba(255,0,0,0.5)',
+  gridRowStart: 10,
+  gridRowEnd: 10,
+  gridColumnStart: 7,
+  gridColumnEnd: 10
+})
 
 const datasetConfig: DatasetConfig = {
   tableName: 'covid',
@@ -49,9 +45,9 @@ export function WorldMapPage() {
   return (
     <MapContainer className="map-container">
       <WorldMap columnValueByCountry={columnValueByCountry} />
-      <Box>
-        <MapDateSlider dates={dates} onChange={handleTimeChange} value={selectedTime} />
-      </Box>
+      <MapControlBox>
+        <DateSlider dates={dates} onChange={handleTimeChange} value={selectedTime} />
+      </MapControlBox>
     </MapContainer>
   );
 }
