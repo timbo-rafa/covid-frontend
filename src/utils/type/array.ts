@@ -1,6 +1,6 @@
-import { DatasetApiBaseType } from 'src/api/api';
+import { DataRow } from 'src/api/api';
 
-export function groupBy<DataType extends Partial<DatasetApiBaseType>>(data: DataType[], column: string) {
+export function groupBy<DataType extends Partial<DataRow>>(data: DataType[], column: string) {
   const groupedData: Record<string | number, DataType[]> = {};
 
   for (const dataRow of data) {
@@ -16,7 +16,7 @@ export function groupBy<DataType extends Partial<DatasetApiBaseType>>(data: Data
   return groupedData;
 }
 
-export function selectColumnValueInGroupBy<DataType extends Partial<DatasetApiBaseType>>(
+export function selectColumnValueInGroupBy<DataType extends Partial<DataRow>>(
   groupedDataArrays: Record<string | number, DataType[]>,
   column: string,
 ) {

@@ -18,13 +18,13 @@ const FullHeightMap = styled('div')({
 });
 
 export type WorldMapProps = {
-  columnValueByCountry: Record<string, number | null | undefined>;
+  columnValueByCountry: Record<string, number>;
 };
 
 export function WorldMap({ columnValueByCountry }: WorldMapProps) {
   const { mapContainer, map, mapHasLoaded } = useMapboxChoroplethMap();
   useClickRedirectToCountryData(map);
-
+  
   React.useEffect(() => {
     if (map.current !== null && mapHasLoaded && !isEmptyObject(columnValueByCountry)) {
       updateChoroplethColors(map.current, columnValueByCountry);

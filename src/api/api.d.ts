@@ -1,5 +1,6 @@
-export type DataRowBaseType = string | number;
-export type DatasetApiBaseType = Record<string, DataRowBaseType>
+export type DataColumn = string | number;
+export type DataRow = Record<string, DataColumn>
+export type DataDictionary = Record<DataColumn, DataRow>; 
 
 export type DatasetConfig = {
   tableName: string;

@@ -1,9 +1,7 @@
-import { Box, styled } from '@mui/material';
+import { Box, Slider, styled } from '@mui/material';
 import React from 'react';
 import { useTableApiQuery } from './use-table-api-query.hook';
 import { useParams } from 'react-router-dom';
-import { DateSlider } from 'src/components/DateSlider';
-import { useWorldMapData } from 'src/pages/WorldMap/use-world-map-data.hook';
 import { DatasetConfig } from 'src/api/api';
 import { WorldMap } from './WorldMap';
 
@@ -17,36 +15,54 @@ const MapControlBox = styled(Box)({
   gridRowStart: 10,
   gridRowEnd: 10,
   gridColumnStart: 7,
-  gridColumnEnd: 10
-})
+  gridColumnEnd: 10,
+});
 
 const datasetConfig: DatasetConfig = {
   tableName: 'covid',
   timeColumn: 'date',
-  countryColumn: 'country',
+  countryColumn: 'code',
 };
 
 export function WorldMapPage() {
   const { selectedColumnName = 'total_cases' } = useParams();
 
-  const { data, error, isFetching } = useTableApiQuery(datasetConfig);
-  const [selectedTime, setSelectedTime] = React.useState<Date>();
+  const { data, error, isFetching } = useTableApiQuery(selectedColumnName, datasetConfig);
+  const [selectedTimeIndex, setSelectedTimeIndex] = React.useState(0);
 
-  const { columnValueByCountry, dates } = useWorldMapData(data, selectedColumnName, selectedTime, datasetConfig);
+  const handleTimeChange = React.useCallback<(event: Event, value: number | number[]) => void>(
+    (_event, selectedTimeIndex) => {
+      if (Array.isArray(selectedTimeIndex)) {
+        console.warn(JSON.stringify({ msg: 'invalid slider array value', value: selectedTimeIndex }));
+        return;
+      }
 
-  const handleTimeChange = React.useCallback<(event: Event, value: number | number[]) => void>((_event, value) => {
-    if (Array.isArray(value)) {
-      console.warn(JSON.stringify({ msg: 'invalid slider array value', value }));
-      return;
-    }
-    setSelectedTime(new Date(value));
-  }, []);
+      setSelectedTimeIndex(selectedTimeIndex);
+    },
+    [setSelectedTimeIndex],
+  );
+
+  const columnValueByCountry = React.useMemo(() => {
+    const selectedTimestamp = data.timestamps[selectedTimeIndex];
+    const dataRowsByCountry = data.dataDictionary[selectedTimestamp] || {};
+
+    console.log('🚀🚀 | columnValueByCountry | selectedTimestamp:', selectedTimestamp);
+    return dataRowsByCountry;
+  }, [data.timestamps, data.dataDictionary, selectedTimeIndex]);
 
   return (
     <MapContainer className="map-container">
       <WorldMap columnValueByCountry={columnValueByCountry} />
       <MapControlBox>
-        <DateSlider dates={dates} onChange={handleTimeChange} value={selectedTime} />
+        <Slider
+          min={0}
+          max={data.timestamps.length - 1}
+          valueLabelDisplay={'auto'}
+          step={1}
+          shiftStep={1}
+          onChange={handleTimeChange}
+          value={selectedTimeIndex}
+        />
       </MapControlBox>
     </MapContainer>
   );
