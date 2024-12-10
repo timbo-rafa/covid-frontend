@@ -1,5 +1,3 @@
-import moment from "moment";
-
 export function formatToDate(date: Date) {
-  return moment(date).format("YYYY-MM-DD")
+  return Intl.DateTimeFormat().format(date);
 }

@@ -21,15 +21,16 @@ export type WorldMapProps = {
   columnValueByCountry: Record<string, number>;
 };
 
-export function WorldMap({ columnValueByCountry }: WorldMapProps) {
+export const WorldMap = React.memo(({ columnValueByCountry }: WorldMapProps) => {
   const { mapContainer, map, mapHasLoaded } = useMapboxChoroplethMap();
-  useClickRedirectToCountryData(map);
+  //useClickRedirectToCountryData(map);
   
   React.useEffect(() => {
     if (map.current !== null && mapHasLoaded && !isEmptyObject(columnValueByCountry)) {
       updateChoroplethColors(map.current, columnValueByCountry);
+      console.log("🚀 | updateChoroplethColors")
     }
   }, [map, mapHasLoaded, columnValueByCountry]);
 
   return <FullHeightMap ref={mapContainer} />;
-}
+});

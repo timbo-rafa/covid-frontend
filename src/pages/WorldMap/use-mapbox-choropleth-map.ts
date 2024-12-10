@@ -16,10 +16,10 @@ export function useMapboxChoroplethMap() {
     if (!mapContainer.current) return;
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/light-v11',
+      style: 'mapbox://styles/mapbox/light-v11?optimize=true',
       center: [lng, lat],
       zoom: zoom,
-      maxZoom: 4,
+      maxZoom: 3,
       projection: { name: 'mercator' },
     });
 

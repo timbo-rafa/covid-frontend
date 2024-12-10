@@ -10,3 +10,9 @@ npm start
 ```
 
 <img src="https://raw.githubusercontent.com/timbo-rafa/covid-frontend/main/screenshots/covid-cases.png" />
+
+## Backlog
+
+## Downsampling
+## Filter (sql where by)
+## Aggregations

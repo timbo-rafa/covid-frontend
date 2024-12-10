@@ -1,0 +1,4 @@
+{
+  "jestrunner.jestCommand": "react-scripts test --watchAll=false",
+  "jest.runMode": "on-demand"
+}

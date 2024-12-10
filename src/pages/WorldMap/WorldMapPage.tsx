@@ -1,9 +1,9 @@
 import { Box, Slider, styled } from '@mui/material';
 import React from 'react';
-import { useTableApiQuery } from './use-table-api-query.hook';
 import { useParams } from 'react-router-dom';
-import { DatasetConfig } from 'src/api/api';
 import { WorldMap } from './WorldMap';
+import { useDatasetContext } from 'src/dataset-context';
+import { useWorldMapData } from './use-world-map-data.hook';
 
 const MapContainer = styled('div')({
   height: 'calc(100% - 64px)',
@@ -14,20 +14,15 @@ const MapControlBox = styled(Box)({
   backgroundColor: 'rgba(255,0,0,0.5)',
   gridRowStart: 10,
   gridRowEnd: 10,
-  gridColumnStart: 7,
-  gridColumnEnd: 10,
+  gridColumnStart: 3,
+  gridColumnEnd: 7,
 });
-
-const datasetConfig: DatasetConfig = {
-  tableName: 'covid',
-  timeColumn: 'date',
-  countryColumn: 'code',
-};
 
 export function WorldMapPage() {
   const { selectedColumnName = 'total_cases' } = useParams();
+  const datasetContext = useDatasetContext();
 
-  const { data, error, isFetching } = useTableApiQuery(selectedColumnName, datasetConfig);
+  const { data, error, isFetching } = useWorldMapData(selectedColumnName, datasetContext);
   const [selectedTimeIndex, setSelectedTimeIndex] = React.useState(0);
 
   const handleTimeChange = React.useCallback<(event: Event, value: number | number[]) => void>(
@@ -38,6 +33,7 @@ export function WorldMapPage() {
       }
 
       setSelectedTimeIndex(selectedTimeIndex);
+      console.log('🚀 | WorldMapPage | setSelectedTimeIndex');
     },
     [setSelectedTimeIndex],
   );
