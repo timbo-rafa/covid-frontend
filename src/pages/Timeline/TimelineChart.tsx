@@ -2,35 +2,31 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import { useDatasetContext } from 'src/dataset-context';
 import { formatToDate } from 'src/utils/time';
 import { generateDataKeyFromCountryAndColumn } from './flatten-country-data';
-import { useSelectionFilterContext } from 'src/user-selection-filter';
-import { styled } from '@mui/material';
+import { useUserFilterContext } from 'src/user-filter';
+import { Paper } from '@mui/material';
 
 const stackStrategy = {
   //stack: 'total',
-  //area: true,
+  area: false,
   stackOffset: 'none', // To stack 0 on top of others
 } as const;
 
 const customize = {
   // height: 300,
   //legend: { hidden: true },
-  margin: { top: 5 },
+  margin: { top: 80 },
 };
 
 type TimelineChartProps = {
   data: Record<string | number, string | number>[];
 };
 
-const FullHeightDiv = styled('div')({
-  height: 'calc(100% - 64px)',
-});
-
 export default function TimelineChart({ data }: TimelineChartProps) {
   const datasetContext = useDatasetContext();
-  const userSelectionFilter = useSelectionFilterContext();
+  const { selectedColumnNames, selectedCountryIsoCodes } = useUserFilterContext();
 
   return (
-    <FullHeightDiv>
+    <Paper sx={{ height: 'calc(50%)', width: '100%' }}>
       <LineChart
         xAxis={[
           {
@@ -40,8 +36,8 @@ export default function TimelineChart({ data }: TimelineChartProps) {
             //max: 2022,
           },
         ]}
-        series={userSelectionFilter.selectedCountryIsoCodes.flatMap((countryIsoCode) =>
-          userSelectionFilter.selectedColumnNames.map((selectedColumnName) => {
+        series={selectedCountryIsoCodes.flatMap((countryIsoCode) =>
+          selectedColumnNames.map((selectedColumnName) => {
             const columnKey = generateDataKeyFromCountryAndColumn(countryIsoCode, selectedColumnName);
             return {
               dataKey: columnKey,
@@ -49,14 +45,12 @@ export default function TimelineChart({ data }: TimelineChartProps) {
               //color: colors[key],
               showMark: false,
               ...stackStrategy,
-              area: true,
-              stackOffset: 'none',
             };
           }),
         )}
         dataset={data}
         {...customize}
       />
-    </FullHeightDiv>
+    </Paper>
   );
 }

@@ -8,11 +8,16 @@ export type DataDictionaryApiDTO = {
   timestamps: number[];
 };
 
+export enum DownsamplingMethod {
+  LatestMonthly = 'LATEST_MONTHLY'
+}
+
 export type DataDictionaryApiInput = {
   tableName: string;
   timeColumnName: string;
   dictionaryColumnNames: string[];
   selectColumnNames: string[];
+  downsamplingMethod:  DownsamplingMethod | undefined;
 };
 
 export function useTableApiQuery<DataType>(

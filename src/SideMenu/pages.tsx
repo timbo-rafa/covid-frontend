@@ -1,4 +1,5 @@
 export const pages = {
   WorldPage: '/world',
-  CountryDataPage: '/countries',
+  DataTablePage: '/table',
+  TimelinePage: '/timeline'
 } as const;

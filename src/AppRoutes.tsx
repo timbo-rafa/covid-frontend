@@ -2,6 +2,7 @@ import { Navigate, createBrowserRouter } from 'react-router-dom';
 import { SideMenu } from './SideMenu/SideMenu';
 import { WorldMapPage } from './pages/WorldMap';
 import { TimelinePage } from './pages/Timeline';
+import { DataTablePage } from './pages/DataTable/DataTablePage';
 //import { useCountriesQuery } from "./covid-api/use-countries-covid-data-query";
 
 export default function createAppBrowserRouter() {
@@ -17,6 +18,10 @@ export default function createAppBrowserRouter() {
         {
           path: '/timeline',
           element: <TimelinePage />,
+        },
+        {
+          path: '/table',
+          element: <DataTablePage />
         },
         {
           path: '/',

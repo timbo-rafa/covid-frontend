@@ -1,5 +1,5 @@
 import { DatasetContext } from 'src/dataset-context';
-import { DataDictionaryApiDTO, DataDictionaryApiInput, useTableApiQuery } from '../../api/use-table-api-query.hook';
+import { DataDictionaryApiDTO, DataDictionaryApiInput, DownsamplingMethod, useTableApiQuery } from '../../api/use-table-api-query.hook';
 
 export type WorldDataDictionary = {
   dataDictionary: Record<number, Record<string, number>>;
@@ -15,6 +15,7 @@ export function useWorldMapData(selectedColumnName: string, datasetContext: Data
     timeColumnName: datasetContext.timeColumnName,
     dictionaryColumnNames: [datasetContext.timeColumnName, datasetContext.countryColumnName],
     selectColumnNames: [selectedColumnName],
+    downsamplingMethod: DownsamplingMethod.LatestMonthly
   };
   const { error, data, isFetching } = useTableApiQuery(apiInput, (data) => pickFirstColumnValue(data, selectedColumnName));
   return { error, data: data || emptyDataset, isFetching };

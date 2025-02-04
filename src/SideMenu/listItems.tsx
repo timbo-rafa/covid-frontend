@@ -16,34 +16,23 @@ export const HighlightedActiveText = styled(ListItemText)<{ isActive: boolean }>
 );
 
 export const MainListItems = () => {
-  const isWorldPage = useMatch(pages.WorldPage);
-  const isCountryDataPage = useMatch(pages.CountryDataPage);
+  const isWorldPage = useMatch(pages.WorldPage + '/:column');
+  const isTimelinePage = useMatch(pages.TimelinePage);
   const navigate = useNavigate();
 
   return (
     <React.Fragment>
-      <ListItemButton
-        onClick={() => {
-          console.log('cliecked');
-          navigate(pages.WorldPage);
-        }}
-      >
+      <ListItemButton onClick={() => navigate(pages.WorldPage + '/total_cases')}>
         <ListItemIcon>
-          <Public />
+          <Public style={isWorldPage ? { color: 'black' } : undefined} />
         </ListItemIcon>
         <ListItemText primary="World Map" primaryTypographyProps={{ fontWeight: isWorldPage ? 'bold' : undefined }} />
       </ListItemButton>
-      <ListItemButton onClick={() => navigate(pages.CountryDataPage)}>
+      <ListItemButton onClick={() => navigate(pages.TimelinePage)}>
         <ListItemIcon>
-          <Room />
+          <BarChartIcon style={isTimelinePage ? { color: 'black' } : undefined} />
         </ListItemIcon>
-        <ListItemText primary="Country Data" primaryTypographyProps={{ fontWeight: isCountryDataPage ? 'bold' : undefined }} />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Metrics Comparison" />
+        <ListItemText primary="Timeline" primaryTypographyProps={{ fontWeight: isTimelinePage ? 'bold' : undefined }} />
       </ListItemButton>
     </React.Fragment>
   );

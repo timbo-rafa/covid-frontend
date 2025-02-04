@@ -1,6 +1,5 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
@@ -15,7 +14,9 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Outlet } from 'react-router-dom';
 import { MainListItems, secondaryListItems } from './listItems';
-import { Checklist, FilterList } from '@mui/icons-material';
+import { FilterList } from '@mui/icons-material';
+import { UserFilterMenu } from './UserFilterMenu';
+import { useUserFilterContext } from 'src/user-filter';
 
 const drawerWidth: number = 240;
 
@@ -72,9 +73,15 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export function SideMenu() {
   const [open, setOpen] = React.useState(false);
+  const [userStateIsOpen, setUserStateIsOpen] = React.useState(false);
+  const {selectedColumnNames} = useUserFilterContext()
 
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+
+  const toggleUserStateDrawer = () => {
+    setUserStateIsOpen(!userStateIsOpen);
   };
 
   return (
@@ -101,8 +108,8 @@ export function SideMenu() {
           <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
             Covid Cases
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+          <IconButton color="inherit" onClick={() => setUserStateIsOpen(!userStateIsOpen)}>
+            <Badge badgeContent={selectedColumnNames.length} color="secondary">
               <FilterList />
             </Badge>
           </IconButton>
@@ -128,6 +135,18 @@ export function SideMenu() {
           {secondaryListItems}
         </List>
       </Drawer>
+
+      <MuiDrawer variant="temporary" open={userStateIsOpen} anchor="right" onClose={() => setUserStateIsOpen(false)}>
+        <Toolbar
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            px: [1],
+          }}
+        />
+        <UserFilterMenu />
+      </MuiDrawer>
       <Box
         component="main"
         sx={{
