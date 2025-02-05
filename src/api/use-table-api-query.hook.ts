@@ -9,15 +9,15 @@ export type DataDictionaryApiDTO = {
 };
 
 export enum DownsamplingMethod {
-  LatestMonthly = 'LATEST_MONTHLY'
+  LatestMonthly = 'LATEST_MONTHLY',
 }
 
 export type DataDictionaryApiInput = {
   tableName: string;
   timeColumnName: string;
-  dictionaryColumnNames: string[];
+  dictionaryColumnNames?: string[];
   selectColumnNames: string[];
-  downsamplingMethod:  DownsamplingMethod | undefined;
+  downsamplingMethod: DownsamplingMethod | undefined;
 };
 
 export function useTableApiQuery<DataType>(
@@ -32,13 +32,10 @@ export function useTableApiQuery<DataType>(
     queryKey: ['table'],
     queryHash: url,
     queryFn: async () => {
-      const tableData = await axios.get<Omit<DataDictionaryApiDTO, 'timestamps'>>(url);
+      const apiResponse = await axios.get<DataDictionaryApiDTO>(url);
 
-      console.log('🚀 | API :', tableData);
-      return {
-        ...tableData.data,
-        timestamps: Object.keys(tableData.data.dataDictionary).map(Number),
-      };
+      console.log('🚀 | API :', apiResponse);
+      return apiResponse.data;
     },
     select,
   });

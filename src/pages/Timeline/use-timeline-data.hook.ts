@@ -23,14 +23,15 @@ export function useTimelineData() {
 
   const apiInput: DataDictionaryApiInput = {
     tableName: datasetContext.tableName,
-    dictionaryColumnNames: [datasetContext.timeColumnName, datasetContext.countryColumnName],
+    dictionaryColumnNames: [datasetContext.timeColumnName, datasetContext.partitionColumnName],
     timeColumnName: datasetContext.timeColumnName,
     selectColumnNames: userFilter.selectedColumnNames,
     downsamplingMethod: DownsamplingMethod.LatestMonthly,
   };
-  const { data, error, isFetching } = useTableApiQuery<TimelineData>(apiInput, (data) =>
+  const { data, error, isFetching } = useTableApiQuery<Omit<TimelineData, 'timestamps'>>(apiInput, (data) =>
     flattenCountryData(data, userFilter.selectedColumnNames, datasetContext),
   );
 
-  return { data: data || emptyDataset, error, isFetching };
+  const timelineData = data ? { ...data, timestamps: data.data.map((row) => row[datasetContext.timeColumnName]) } : emptyDataset;
+  return { data: timelineData, error, isFetching };
 }

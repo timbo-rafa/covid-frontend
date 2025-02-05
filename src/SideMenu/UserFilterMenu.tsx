@@ -1,8 +1,8 @@
 import { Box, FormControlLabel, Paper, Typography, useTheme } from '@mui/material';
-import { useTableMetadata } from './use-table-metadata.hook';
 import { useDatasetContext } from 'src/dataset-context';
 import Checkbox from '@mui/material/Checkbox';
 import { useUserFilterContext } from 'src/user-filter';
+import { useTableMetadataApiQuery } from 'src/api/use-table-metadata.hook';
 
 export type ColumnNameCheckboxProps = {
   columnName: string;
@@ -31,7 +31,7 @@ export function UserFilterMenu() {
     useUserFilterContext();
   const theme = useTheme();
 
-  const { availableColumns, error, isFetching } = useTableMetadata(datasetContext.tableName);
+  const { availableColumns, error, isFetching } = useTableMetadataApiQuery(datasetContext.tableName);
 
   const handleColumnNameToggle = (columnName: string, newSelected: boolean) => {
     console.log('🚀 | handleColumnNameToggle | columnName: string, selected:', columnName, newSelected);

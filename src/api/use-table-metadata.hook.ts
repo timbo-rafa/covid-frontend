@@ -2,15 +2,16 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 export type TableMetadataApiDTO = {
+  id: string;
   tableName: string;
   columnName: string;
   dataType: 'number' | 'string' | 'date' | 'bigint' | string;
 };
 
-export function useTableMetadataApiQuery(tableName: string) {
+export function useTableMetadataApiQuery(tableName: string, selectedColumnNames?: string[]) {
   const url = `${process.env.REACT_APP_API_HOST}/tables/${tableName}/columns`;
 
-  return useQuery<TableMetadataApiDTO[]>({
+  const { data, error, isFetching } = useQuery<TableMetadataApiDTO[]>({
     queryKey: ['metadata'],
     queryHash: url,
     queryFn: async () => {
@@ -18,5 +19,10 @@ export function useTableMetadataApiQuery(tableName: string) {
 
       return apiResponse.data;
     },
+    select: selectedColumnNames
+      ? (data) => data?.filter((columnMetadata) => selectedColumnNames.includes(columnMetadata.columnName))
+      : undefined,
   });
+
+  return { availableColumns: data || [], error, isFetching };
 }

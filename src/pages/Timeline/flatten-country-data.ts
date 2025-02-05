@@ -1,9 +1,10 @@
 import { DatasetContext } from 'src/dataset-context';
-import { TimelineApiDTO, TimelineData } from './use-timeline-data.hook';
+import { TimelineData } from './use-timeline-data.hook';
+import { DataDictionaryApiDTO } from 'src/api/use-table-api-query.hook';
 
-export function flattenCountryData(data: TimelineApiDTO, selectColumnNames: string[], datasetContext: DatasetContext) {
-  const { dataDictionary, mostRecentTimestamp, timestamps } = data;
-  const valuesData: TimelineData = { mostRecentTimestamp, timestamps, data: [] };
+export function flattenCountryData(data: DataDictionaryApiDTO, selectColumnNames: string[], datasetContext: DatasetContext) {
+  const { dataDictionary, mostRecentTimestamp } = data;
+  const valuesData: Omit<TimelineData, 'timestamps'> = { mostRecentTimestamp, data: [] };
   for (const timestampString in dataDictionary) {
     const timestamp = Number(timestampString);
     const timeDatapoint: Record<string, string | number> = {};
@@ -20,7 +21,6 @@ export function flattenCountryData(data: TimelineApiDTO, selectColumnNames: stri
           timeDatapoint[flattenedCountryKey] = columnValue;
         }
       }
-
     }
 
     valuesData.data.push(timeDatapoint);

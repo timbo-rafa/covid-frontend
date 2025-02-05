@@ -1,23 +1,26 @@
-import { Paper } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { Paper, useTheme } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import { TableMetadataApiDTO } from 'src/api/use-table-metadata.hook';
 
 type DataTableProps = {
   data: Record<string | number, string | number>[];
+  columnMetadata: TableMetadataApiDTO[];
 };
 
+const paginationModel = { page: 0, pageSize: 20 };
 
-const paginationModel = { page: 0, pageSize: 5 };
+export function DataTable({ data, columnMetadata }: DataTableProps) {
+  const theme = useTheme();
 
-export function DataTable({data} : DataTableProps) {
+  console.log('🚀 | DataTable | data:', data);
   return (
-    <Paper sx={{ height: 400, width: '100%' }}>
+    <Paper sx={{ width: '100%' }}>
       <DataGrid
         rows={data}
-        columns={Object.keys(data).map((field, id) => ({field, id}))}
+        columns={columnMetadata.map((column) => ({ id: column.id, field: column.columnName }))}
         initialState={{ pagination: { paginationModel } }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-        sx={{ border: 0 }}
+        pageSizeOptions={[20, 100]}
+        sx={{ border: theme.spacing(3) }}
       />
     </Paper>
   );
