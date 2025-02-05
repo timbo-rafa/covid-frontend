@@ -5,8 +5,8 @@ import './App.css';
 import createAppBrowserRouter from './AppRoutes';
 import './mui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { UserFilterContext, userFilterDefaults } from './user-filter/user-filter.context';
-import React from 'react';
+import { UserFilterContext } from './user-filter/user-filter.context';
+import { useUserFilterContextValue } from './user-filter/user-filter.hook';
 
 const router = createAppBrowserRouter();
 const defaultTheme = createTheme();
@@ -14,14 +14,7 @@ const defaultTheme = createTheme();
 const queryClient = new QueryClient();
 
 function App() {
-  const [selectedColumnNames, setSelectedColumnNames] = React.useState(userFilterDefaults.selectedColumnNames);
-  const [selectedCountryIsoCodes, setSelectedCountryIsoCodes] = React.useState(userFilterDefaults.selectedCountryIsoCodes);
-
-  const userFilterContextValue = React.useMemo(
-    () => ({ selectedColumnNames, setSelectedColumnNames, selectedCountryIsoCodes, setSelectedCountryIsoCodes }),
-    [selectedColumnNames, setSelectedColumnNames, selectedCountryIsoCodes, setSelectedCountryIsoCodes],
-  );
-
+  const userFilterContextValue = useUserFilterContextValue();
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={defaultTheme}>
