@@ -23,7 +23,7 @@ type TimelineChartProps = {
 
 export default function TimelineChart({ data }: TimelineChartProps) {
   const datasetContext = useDatasetContext();
-  const { selectedColumnNames, selectedCountryIsoCodes } = useUserFilterContext();
+  const { selectedColumnNames, selectedKeyColumnValues: selectedCountryIsoCodes } = useUserFilterContext();
 
   return (
     <Paper sx={{ height: 'calc(50%)', width: '100%' }}>

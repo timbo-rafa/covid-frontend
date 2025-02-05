@@ -9,14 +9,14 @@ export function useUserFilterContextValue() {
     `${datasetContext.tableName}.selectedColumnNames`,
     userFilterDefaults.selectedColumnNames,
   );
-  const [selectedCountryIsoCodes = [], setSelectedCountryIsoCodes] = useLocalStorage(
-    `${datasetContext.tableName}.selectedCountryIsoCodes`,
-    userFilterDefaults.selectedCountryIsoCodes,
+  const [selectedKeyColumnValues = [], setSelectedKeyColumnValues] = useLocalStorage(
+    `${datasetContext.tableName}.selectedKeyColumnValues`,
+    userFilterDefaults.selectedKeyColumnValues,
   );
 
   const userFilterContextValue = React.useMemo(
-    () => ({ selectedColumnNames, setSelectedColumnNames, selectedCountryIsoCodes, setSelectedCountryIsoCodes }),
-    [selectedColumnNames, setSelectedColumnNames, selectedCountryIsoCodes, setSelectedCountryIsoCodes],
+    () => ({ selectedColumnNames, setSelectedColumnNames, selectedKeyColumnValues, setSelectedKeyColumnValues }),
+    [selectedColumnNames, setSelectedColumnNames, selectedKeyColumnValues, setSelectedKeyColumnValues],
   );
 
   return userFilterContextValue;

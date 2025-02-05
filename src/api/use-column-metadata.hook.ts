@@ -8,7 +8,7 @@ export type TableMetadataApiDTO = {
   dataType: 'number' | 'string' | 'date' | 'bigint' | string;
 };
 
-export function useTableMetadataApiQuery(tableName: string, selectedColumnNames?: string[]) {
+export function useColumnMetadataApiQuery(tableName: string, selectedColumnNames?: string[]) {
   const url = `${process.env.REACT_APP_API_HOST}/tables/${tableName}/columns`;
 
   const { data, error, isFetching } = useQuery<TableMetadataApiDTO[]>({

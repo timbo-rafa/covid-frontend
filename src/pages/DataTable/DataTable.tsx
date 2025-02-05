@@ -1,6 +1,6 @@
 import { Paper, useTheme } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import { TableMetadataApiDTO } from 'src/api/use-table-metadata.hook';
+import { TableMetadataApiDTO } from 'src/api/use-column-metadata.hook';
 
 type DataTableProps = {
   data: Record<string | number, string | number>[];

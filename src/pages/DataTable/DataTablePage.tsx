@@ -2,13 +2,13 @@ import { DataTable } from './DataTable';
 import { useDataTableData } from './use-data-table-data.hook';
 import { useUserFilterContext } from 'src/user-filter';
 import { useDatasetContext } from 'src/dataset-context';
-import { useTableMetadataApiQuery } from 'src/api/use-table-metadata.hook';
+import { useColumnMetadataApiQuery } from 'src/api/use-column-metadata.hook';
 
 export function DataTablePage() {
   const datasetContext = useDatasetContext();
   const userFilter = useUserFilterContext();
 
-  const columnMetadataQueryResult = useTableMetadataApiQuery(datasetContext.tableName, [
+  const columnMetadataQueryResult = useColumnMetadataApiQuery(datasetContext.tableName, [
     ...userFilter.selectedColumnNames,
     datasetContext.timeColumnName,
     datasetContext.partitionColumnName,
