@@ -18,7 +18,7 @@ export function CheckList({ items, requiredItems, onCheckboxChange, selectedItem
       {items.map((name) => {
         const requiredColumn = requiredItems?.find((requiredColumn) => requiredColumn.name === name);
         const label = name + (requiredColumn?.appendToLabel || '');
-        const isRequired = requiredItems !== null;
+        const isRequired = requiredColumn !== undefined;
 
         return (
           <FormControlLabel
