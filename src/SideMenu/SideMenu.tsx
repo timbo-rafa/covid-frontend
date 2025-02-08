@@ -15,7 +15,7 @@ import * as React from 'react';
 import { Outlet } from 'react-router-dom';
 import { MainListItems, secondaryListItems } from './listItems';
 import { FilterList } from '@mui/icons-material';
-import { UserFilterMenu } from './UserFilterMenu';
+import { UserFilterMenu } from './UserFilterMenu/UserFilterMenu';
 import { useUserFilterContext } from 'src/user-filter';
 
 const drawerWidth: number = 240;
@@ -74,16 +74,12 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export function SideMenu() {
   const [open, setOpen] = React.useState(false);
   const [userStateIsOpen, setUserStateIsOpen] = React.useState(false);
-  const {selectedColumnNames} = useUserFilterContext()
+  const {selectedColumnNames, selectedKeyColumnValues} = useUserFilterContext()
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
-  const toggleUserStateDrawer = () => {
-    setUserStateIsOpen(!userStateIsOpen);
-  };
-
+  
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -109,7 +105,7 @@ export function SideMenu() {
             Covid Cases
           </Typography>
           <IconButton color="inherit" onClick={() => setUserStateIsOpen(!userStateIsOpen)}>
-            <Badge badgeContent={selectedColumnNames.length} color="secondary">
+            <Badge badgeContent={`${selectedColumnNames.length},${selectedKeyColumnValues.length}`} color="secondary">
               <FilterList />
             </Badge>
           </IconButton>
