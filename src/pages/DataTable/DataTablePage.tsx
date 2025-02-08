@@ -11,7 +11,7 @@ export function DataTablePage() {
   const columnMetadataQueryResult = useColumnMetadataApiQuery(datasetContext.tableName, [
     ...userFilter.selectedColumnNames,
     datasetContext.timeColumnName,
-    datasetContext.partitionColumnName,
+    datasetContext.keyColumnName,
   ]);
   const dataQueryResult = useDataTableData();
   const isFetching = columnMetadataQueryResult.isFetching || dataQueryResult.isFetching;

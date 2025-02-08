@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, Typography } from '@mui/material';
+import { Checkbox, FormControlLabel } from '@mui/material';
 
 type RequiredColumn = {
   name: string;
@@ -15,9 +15,6 @@ type CheckListProps = {
 export function CheckList({ items, requiredItems, onCheckboxChange, selectedItems }: CheckListProps) {
   return (
     <>
-      <Typography variant="h5" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-        Columns
-      </Typography>
       {items.map((name) => {
         const requiredColumn = requiredItems?.find((requiredColumn) => requiredColumn.name === name);
         const label = name + (requiredColumn?.appendToLabel || '');

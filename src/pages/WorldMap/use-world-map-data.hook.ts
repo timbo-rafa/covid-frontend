@@ -13,7 +13,7 @@ export function useWorldMapData(selectedColumnName: string, datasetContext: Data
   const apiInput: DataDictionaryApiInput = {
     tableName: datasetContext.tableName,
     timeColumnName: datasetContext.timeColumnName,
-    dictionaryColumnNames: [datasetContext.timeColumnName, datasetContext.partitionColumnName],
+    dictionaryColumnNames: [datasetContext.timeColumnName, datasetContext.keyColumnName],
     selectColumnNames: [selectedColumnName],
     downsamplingMethod: DownsamplingMethod.LatestMonthly
   };

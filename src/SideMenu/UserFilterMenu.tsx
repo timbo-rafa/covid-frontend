@@ -1,9 +1,12 @@
-import { Box, Divider, Paper, useTheme } from '@mui/material';
+import { Box, Divider, LinearProgress, Paper, Skeleton, Typography, useTheme } from '@mui/material';
 import { useDatasetContext } from 'src/dataset-context';
 import { useUserFilterContext } from 'src/user-filter';
 import { useColumnMetadataApiQuery } from 'src/api/use-column-metadata.hook';
 import { CheckList } from './CheckList';
 import { useColumnValuesApiQuery } from 'src/api/use-column-values.hook';
+import { LoadingBar } from 'src/molecules/LoadingBar';
+import { LoadingSpinner } from 'src/molecules/LoadingSpinner';
+import { Suspense } from 'react';
 
 export function UserFilterMenu() {
   const datasetContext = useDatasetContext();
@@ -11,7 +14,7 @@ export function UserFilterMenu() {
     useUserFilterContext();
   const theme = useTheme();
 
-  const { availableColumns, error, isFetching } = useColumnMetadataApiQuery(datasetContext.tableName);
+  const columnMetadataQueryResult = useColumnMetadataApiQuery(datasetContext.tableName);
   const handleColumnNameToggle = (columnName: string, isNowSelected: boolean) => {
     console.log('🚀 | handleColumnNameToggle | columnName: string, selected:', columnName, isNowSelected);
 
@@ -23,7 +26,7 @@ export function UserFilterMenu() {
     }
   };
 
-  const keyColumnValuesQueryResult = useColumnValuesApiQuery(datasetContext.tableName, datasetContext.partitionColumnName);
+  const keyColumnValuesQueryResult = useColumnValuesApiQuery(datasetContext.tableName, datasetContext.keyColumnName);
   const handleKeyColumnValuesToggle = (keyColumnValue: string, isNowSelected: boolean) => {
     if (isNowSelected) {
       selectedKeyColumnValues.push(keyColumnValue);
@@ -36,22 +39,32 @@ export function UserFilterMenu() {
   return (
     <Paper>
       <Box display={'flex'} flexDirection={'column'} sx={{ margin: theme.spacing(3) }}>
-        <CheckList
-          items={availableColumns.map((column) => column.columnName)}
-          requiredItems={[
-            { name: datasetContext.timeColumnName, appendToLabel: ' (time column)' },
-            { name: datasetContext.partitionColumnName, appendToLabel: ' (key column)' },
-          ]}
-          onCheckboxChange={handleColumnNameToggle}
-          selectedItems={selectedColumnNames}
-        />
+        <Typography variant="h5" color="inherit" noWrap sx={{ flexGrow: 1 }}>
+          Columns
+        </Typography>
+        <LoadingSpinner isLoading={columnMetadataQueryResult.isFetching} >
+          <CheckList
+            items={columnMetadataQueryResult.availableColumns.map((column) => column.columnName)}
+            requiredItems={[
+              { name: datasetContext.timeColumnName, appendToLabel: ' (time column)' },
+              { name: datasetContext.keyColumnName, appendToLabel: ' (key column)' },
+            ]}
+            onCheckboxChange={handleColumnNameToggle}
+            selectedItems={selectedColumnNames}
+          />
+        </LoadingSpinner>
+        <Divider sx={{my: theme.spacing(1)}}/>
+        <Typography variant="h5" color="inherit" noWrap sx={{ flexGrow: 1 }}>
+          Countries
+        </Typography>
+        <LoadingSpinner isLoading={keyColumnValuesQueryResult.isFetching}>
+          <CheckList
+            items={keyColumnValuesQueryResult.columnValues}
+            selectedItems={selectedKeyColumnValues}
+            onCheckboxChange={handleKeyColumnValuesToggle}
+          />
+        </LoadingSpinner>
       </Box>
-      <Divider />
-      <CheckList
-        items={keyColumnValuesQueryResult.columnValues}
-        selectedItems={selectedKeyColumnValues}
-        onCheckboxChange={handleKeyColumnValuesToggle}
-      />
     </Paper>
   );
 }

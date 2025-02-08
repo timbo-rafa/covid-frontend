@@ -3,13 +3,13 @@ import { createContext, useContext } from 'react';
 export type DatasetContext = {
   tableName: string;
   timeColumnName: string;
-  partitionColumnName: string;
+  keyColumnName: string;
 };
 
 export const defaultDatasetContext: DatasetContext = {
   tableName: 'covid',
   timeColumnName: 'date',
-  partitionColumnName: 'code',
+  keyColumnName: 'code',
 };
 
 const datasetContext = createContext(defaultDatasetContext);

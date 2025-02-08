@@ -18,7 +18,7 @@ export function useDataTableData() {
       'id',
       ...userFilter.selectedColumnNames,
       datasetContext.timeColumnName,
-      datasetContext.partitionColumnName,
+      datasetContext.keyColumnName,
     ],
     downsamplingMethod: DownsamplingMethod.LatestMonthly,
   };

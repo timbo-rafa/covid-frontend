@@ -23,7 +23,7 @@ export function useTimelineData() {
 
   const apiInput: DataDictionaryApiInput = {
     tableName: datasetContext.tableName,
-    dictionaryColumnNames: [datasetContext.timeColumnName, datasetContext.partitionColumnName],
+    dictionaryColumnNames: [datasetContext.timeColumnName, datasetContext.keyColumnName],
     timeColumnName: datasetContext.timeColumnName,
     selectColumnNames: userFilter.selectedColumnNames,
     downsamplingMethod: DownsamplingMethod.LatestMonthly,
