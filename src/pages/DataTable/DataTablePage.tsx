@@ -18,7 +18,6 @@ export function DataTablePage() {
   const dataQueryResult = useDataTableData();
   const isFetching = columnMetadataQueryResult.isFetching || dataQueryResult.isFetching;
 
-  console.log('🚀 | DataTablePage | rows:', dataQueryResult.rows);
   return (
     <Box>
       <LoadingSpinner isLoading={isFetching}>

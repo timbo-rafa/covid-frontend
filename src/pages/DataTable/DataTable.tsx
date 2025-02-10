@@ -1,4 +1,4 @@
-import { Paper, useTheme } from '@mui/material';
+import { Paper } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { TableMetadataApiDTO } from 'src/api/use-column-metadata.hook';
 
@@ -10,9 +10,6 @@ type DataTableProps = {
 const paginationModel = { page: 0, pageSize: 20 };
 
 export function DataTable({ data, columnMetadata }: DataTableProps) {
-  const theme = useTheme();
-
-  console.log('🚀 | DataTable | data:', data);
   return (
     <Paper sx={{ width: '100%' }}>
       <DataGrid

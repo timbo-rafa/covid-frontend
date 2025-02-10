@@ -23,6 +23,5 @@ export function useDataTableData() {
     downsamplingMethod: DownsamplingMethod.LatestMonthly,
   };
   const { data, error, isFetching } = useTableApiQuery<DataApiDTO>(apiInput);
-  console.log('🚀 | useDataTableData | data:', data);
   return { rows: data?.data || [], error, isFetching };
 }
