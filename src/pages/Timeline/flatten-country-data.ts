@@ -10,7 +10,7 @@ export function flattenTimelineData(
 ) {
   const { dataDictionary, mostRecentTimestamp, timestamps } = data;
   const valuesData: TimelineData = { mostRecentTimestamp, data: [], timestamps };
-  for (const timestampString in dataDictionary) {
+  for (const timestampString of timestamps) {
     const timestamp = Number(timestampString);
     const timeDatapoint: Record<string, string | number | null> = {};
     timeDatapoint[datasetContext.timeColumnName] = timestamp;

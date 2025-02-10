@@ -24,7 +24,7 @@ type TimelineChartProps = {
 export default function TimelineChart({ data }: TimelineChartProps) {
   const datasetContext = useDatasetContext();
   const { selectedColumnNames, selectedKeyColumnValues } = useUserFilterContext();
-
+  
   const series = selectedKeyColumnValues.flatMap((countryIsoCode) =>
     selectedColumnNames.map((selectedColumnName) => {
       const columnKey = generateDataKeyFromCountryAndColumn(countryIsoCode, selectedColumnName);
