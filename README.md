@@ -9,5 +9,6 @@ Make sure back-end is running https://github.com/timbo-rafa/covid-backend, then:
 ```bash
 npm start
 ```
+<img src="https://raw.githubusercontent.com/timbo-rafa/covid-frontend/main/screenshots/covid-world-map.png" />
 
-<img src="https://raw.githubusercontent.com/timbo-rafa/covid-frontend/main/screenshots/covid-cases.png" />
+<img src="https://raw.githubusercontent.com/timbo-rafa/covid-frontend/main/screenshots/covid-timeline.png" />
