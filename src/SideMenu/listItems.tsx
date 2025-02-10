@@ -1,15 +1,13 @@
-import { Public, Room } from '@mui/icons-material';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import LayersIcon from '@mui/icons-material/Layers';
+import { Public } from '@mui/icons-material';
 import { styled } from '@mui/material';
+import TimelineIcon from '@mui/icons-material/Timeline';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 import * as React from 'react';
-import { redirect, useMatch, useNavigate } from 'react-router-dom';
+import { useMatch, useNavigate } from 'react-router-dom';
 import { pages } from './pages';
+import { GridTableRowsIcon } from '@mui/x-data-grid';
 
 export const HighlightedActiveText = styled(ListItemText)<{ isActive: boolean }>(({ isActive }) =>
   isActive ? { backgroundColor: 'grey' } : {},
@@ -18,6 +16,7 @@ export const HighlightedActiveText = styled(ListItemText)<{ isActive: boolean }>
 export const MainListItems = () => {
   const isWorldPage = useMatch(pages.WorldPage + '/:column');
   const isTimelinePage = useMatch(pages.TimelinePage);
+  const isDataTablePage = useMatch(pages.DataTablePage);
   const navigate = useNavigate();
 
   return (
@@ -30,9 +29,15 @@ export const MainListItems = () => {
       </ListItemButton>
       <ListItemButton onClick={() => navigate(pages.TimelinePage)}>
         <ListItemIcon>
-          <BarChartIcon style={isTimelinePage ? { color: 'black' } : undefined} />
+          <TimelineIcon style={isTimelinePage ? { color: 'black' } : undefined} />
         </ListItemIcon>
         <ListItemText primary="Timeline" primaryTypographyProps={{ fontWeight: isTimelinePage ? 'bold' : undefined }} />
+      </ListItemButton>
+      <ListItemButton onClick={() => navigate(pages.DataTablePage)}>
+        <ListItemIcon>
+          <GridTableRowsIcon style={isDataTablePage ? { color: 'black' } : undefined} />
+        </ListItemIcon>
+        <ListItemText primary="Timeline" primaryTypographyProps={{ fontWeight: isDataTablePage ? 'bold' : undefined }} />
       </ListItemButton>
     </React.Fragment>
   );
