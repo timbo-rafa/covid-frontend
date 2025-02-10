@@ -1,4 +1,4 @@
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, useTheme } from '@mui/material';
 import { PropsWithChildren } from 'react';
 
 type LoadingSpinnerProps = {
@@ -6,8 +6,9 @@ type LoadingSpinnerProps = {
 };
 
 export function LoadingSpinner({ children, isLoading }: PropsWithChildren<LoadingSpinnerProps>) {
+  const theme = useTheme();
   if (isLoading) {
-    return <CircularProgress style={{alignSelf: 'center'}}/>;
+    return <CircularProgress style={{alignSelf: 'center', justifyContent: 'center'}} sx={{margin: theme.spacing(2)}}/>;
   }
 
   return <>{children}</>;

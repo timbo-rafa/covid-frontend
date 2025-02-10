@@ -33,7 +33,6 @@ export function WorldMapPage() {
       }
 
       setSelectedTimeIndex(selectedTimeIndex);
-      console.log('🚀 | WorldMapPage | setSelectedTimeIndex');
     },
     [setSelectedTimeIndex],
   );
@@ -42,7 +41,6 @@ export function WorldMapPage() {
     const selectedTimestamp = data.timestamps[selectedTimeIndex];
     const dataRowsByCountry = data.dataDictionary[selectedTimestamp] || {};
 
-    console.log('🚀🚀 | columnValueByCountry | selectedTimestamp:', selectedTimestamp);
     return dataRowsByCountry;
   }, [data.timestamps, data.dataDictionary, selectedTimeIndex]);
 

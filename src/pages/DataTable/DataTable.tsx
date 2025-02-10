@@ -20,7 +20,6 @@ export function DataTable({ data, columnMetadata }: DataTableProps) {
         columns={columnMetadata.map((column) => ({ id: column.id, field: column.columnName }))}
         initialState={{ pagination: { paginationModel } }}
         pageSizeOptions={[20, 100]}
-        sx={{ border: theme.spacing(3) }}
       />
     </Paper>
   );

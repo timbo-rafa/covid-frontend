@@ -14,7 +14,7 @@ const stackStrategy = {
 const customize = {
   // height: 300,
   //legend: { hidden: true },
-  margin: { top: 80 },
+  margin: { top: 80, left: 100 },
 };
 
 type TimelineChartProps = {
@@ -24,7 +24,7 @@ type TimelineChartProps = {
 export default function TimelineChart({ data }: TimelineChartProps) {
   const datasetContext = useDatasetContext();
   const { selectedColumnNames, selectedKeyColumnValues } = useUserFilterContext();
-  
+
   const series = selectedKeyColumnValues.flatMap((countryIsoCode) =>
     selectedColumnNames.map((selectedColumnName) => {
       const columnKey = generateDataKeyFromCountryAndColumn(countryIsoCode, selectedColumnName);
@@ -36,7 +36,7 @@ export default function TimelineChart({ data }: TimelineChartProps) {
         ...stackStrategy,
       };
     }),
-  )
+  );
 
   return (
     <Paper sx={{ height: 'calc(50%)', width: '100%' }}>

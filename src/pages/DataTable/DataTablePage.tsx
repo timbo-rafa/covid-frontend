@@ -3,12 +3,12 @@ import { useDataTableData } from './use-data-table-data.hook';
 import { useUserFilterContext } from 'src/user-filter';
 import { useDatasetContext } from 'src/dataset-context';
 import { useColumnMetadataApiQuery } from 'src/api/use-column-metadata.hook';
-import { Box, useTheme } from '@mui/material';
+import { Box } from '@mui/material';
+import { LoadingSpinner } from 'src/molecules/LoadingSpinner';
 
 export function DataTablePage() {
   const datasetContext = useDatasetContext();
   const userFilter = useUserFilterContext();
-  const theme = useTheme();
 
   const columnMetadataQueryResult = useColumnMetadataApiQuery(datasetContext.tableName, [
     ...userFilter.selectedColumnNames,
@@ -20,8 +20,10 @@ export function DataTablePage() {
 
   console.log('🚀 | DataTablePage | rows:', dataQueryResult.rows);
   return (
-    <Box sx={{ margin: theme.spacing(3) }}>
-      <DataTable data={dataQueryResult.rows} columnMetadata={columnMetadataQueryResult.availableColumns} />;
+    <Box>
+      <LoadingSpinner isLoading={isFetching}>
+        <DataTable data={dataQueryResult.rows} columnMetadata={columnMetadataQueryResult.availableColumns} />
+      </LoadingSpinner>
     </Box>
   );
 }
