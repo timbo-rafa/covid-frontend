@@ -18,12 +18,25 @@ const customize = {
 };
 
 type TimelineChartProps = {
-  data: Record<string | number, string | number>[];
+  data: Record<string | number, string | number | null>[];
 };
 
 export default function TimelineChart({ data }: TimelineChartProps) {
   const datasetContext = useDatasetContext();
-  const { selectedColumnNames, selectedKeyColumnValues: selectedCountryIsoCodes } = useUserFilterContext();
+  const { selectedColumnNames, selectedKeyColumnValues } = useUserFilterContext();
+
+  const series = selectedKeyColumnValues.flatMap((countryIsoCode) =>
+    selectedColumnNames.map((selectedColumnName) => {
+      const columnKey = generateDataKeyFromCountryAndColumn(countryIsoCode, selectedColumnName);
+      return {
+        dataKey: columnKey,
+        label: columnKey,
+        //color: colors[key],
+        showMark: true,
+        ...stackStrategy,
+      };
+    }),
+  )
 
   return (
     <Paper sx={{ height: 'calc(50%)', width: '100%' }}>
@@ -36,18 +49,7 @@ export default function TimelineChart({ data }: TimelineChartProps) {
             //max: 2022,
           },
         ]}
-        series={selectedCountryIsoCodes.flatMap((countryIsoCode) =>
-          selectedColumnNames.map((selectedColumnName) => {
-            const columnKey = generateDataKeyFromCountryAndColumn(countryIsoCode, selectedColumnName);
-            return {
-              dataKey: columnKey,
-              label: columnKey,
-              //color: colors[key],
-              showMark: false,
-              ...stackStrategy,
-            };
-          }),
-        )}
+        series={series}
         dataset={data}
         {...customize}
       />

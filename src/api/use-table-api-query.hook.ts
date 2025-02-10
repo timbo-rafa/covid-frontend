@@ -34,7 +34,7 @@ export function useTableApiQuery<DataType>(
     queryFn: async () => {
       const apiResponse = await axios.get<DataDictionaryApiDTO>(url);
 
-      console.log('🚀 | API :', apiResponse);
+      console.log('🚀 | API :', apiResponse.data);
       return apiResponse.data;
     },
     select,

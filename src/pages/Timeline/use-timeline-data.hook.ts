@@ -1,6 +1,6 @@
 import { useDatasetContext } from 'src/dataset-context';
 import { DataDictionaryApiInput, DownsamplingMethod, useTableApiQuery } from '../../api/use-table-api-query.hook';
-import { flattenCountryData } from './flatten-country-data';
+import { flattenTimelineData } from './flatten-country-data';
 import { useUserFilterContext } from 'src/user-filter';
 
 export type TimelineApiDTO = {
@@ -10,12 +10,10 @@ export type TimelineApiDTO = {
 };
 
 export type TimelineData = {
-  data: Record<string, string | number>[];
+  data: Record<string, string | number | null>[];
   mostRecentTimestamp: number | null;
   timestamps: number[];
 };
-
-const emptyDataset: TimelineData = { data: [], mostRecentTimestamp: null, timestamps: [] };
 
 export function useTimelineData() {
   const datasetContext = useDatasetContext();
@@ -28,10 +26,10 @@ export function useTimelineData() {
     selectColumnNames: userFilter.selectedColumnNames,
     downsamplingMethod: DownsamplingMethod.LatestMonthly,
   };
-  const { data, error, isFetching } = useTableApiQuery<Omit<TimelineData, 'timestamps'>>(apiInput, (data) =>
-    flattenCountryData(data, userFilter.selectedColumnNames, datasetContext),
+  const { data, error, isFetching } = useTableApiQuery<TimelineData>(apiInput, (data) =>
+    flattenTimelineData(data, userFilter.selectedColumnNames, userFilter.selectedKeyColumnValues, datasetContext),
   );
 
-  const timelineData = data ? { ...data, timestamps: data.data.map((row) => row[datasetContext.timeColumnName]) } : emptyDataset;
+  const timelineData = data?.data || [];
   return { data: timelineData, error, isFetching };
 }

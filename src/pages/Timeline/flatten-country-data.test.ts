@@ -1,5 +1,5 @@
 import { defaultDatasetContext } from 'src/dataset-context';
-import { flattenCountryData } from './flatten-country-data';
+import { flattenTimelineData } from './flatten-country-data';
 import { TimelineApiDTO } from './use-timeline-data.hook';
 
 describe('flattenCountryData', () => {
@@ -18,8 +18,11 @@ describe('flattenCountryData', () => {
     timestamps: [1620000000000, 1620100000000],
   };
 
+  const selectedColumnNames = ['cases', 'deaths'];
+  const selectedKeyColumnValues = ['USA', 'CAN'];
+
   test('should flatten country data correctly', () => {
-    const result = flattenCountryData(sampleData, ['cases', 'deaths'], defaultDatasetContext);
+    const result = flattenTimelineData(sampleData, selectedColumnNames, selectedKeyColumnValues, defaultDatasetContext);
 
     expect(result).toEqual({
       mostRecentTimestamp: 1620100000000,
@@ -37,7 +40,7 @@ describe('flattenCountryData', () => {
       mostRecentTimestamp: null,
       timestamps: [],
     };
-    const result = flattenCountryData(emptyData, ['cases', 'deaths'], defaultDatasetContext);
+    const result = flattenTimelineData(emptyData, selectedColumnNames, selectedKeyColumnValues, defaultDatasetContext);
 
     expect(result).toEqual({
       mostRecentTimestamp: null,
@@ -57,12 +60,51 @@ describe('flattenCountryData', () => {
       mostRecentTimestamp: 1620000000000,
       timestamps: [1620000000000],
     };
-    const result = flattenCountryData(incompleteData, ['cases', 'deaths'], defaultDatasetContext);
+    const result = flattenTimelineData(incompleteData, selectedColumnNames, selectedKeyColumnValues, defaultDatasetContext);
 
     expect(result).toEqual({
       mostRecentTimestamp: 1620000000000,
       timestamps: [1620000000000],
-      data: [{ date: 1620000000000, CAN_deaths: 5, USA_cases: 100 }],
+      data: [{ date: 1620000000000, CAN_cases: null, CAN_deaths: 5, USA_cases: 100, USA_deaths: null }],
+    });
+  });
+
+  test('should handle missing key values in dictionary', () => {
+    const incompleteData: TimelineApiDTO = {
+      dataDictionary: {
+        1620000000000: {
+          CAN: [{ deaths: 5 }],
+        },
+      },
+      mostRecentTimestamp: 1620000000000,
+      timestamps: [1620000000000],
+    };
+    const result = flattenTimelineData(incompleteData, selectedColumnNames, selectedKeyColumnValues, defaultDatasetContext);
+
+    expect(result).toEqual({
+      mostRecentTimestamp: 1620000000000,
+      timestamps: [1620000000000],
+      data: [{ date: 1620000000000, CAN_cases: null, CAN_deaths: 5, USA_cases: null, USA_deaths: null }],
+    });
+  });
+
+  test('should handle no data', () => {
+    const incompleteData: TimelineApiDTO = {
+      dataDictionary: {
+        1620000000000: {
+          USA: [],
+          CAN: [{ deaths: 5 }],
+        },
+      },
+      mostRecentTimestamp: 1620000000000,
+      timestamps: [1620000000000],
+    };
+    const result = flattenTimelineData(incompleteData, selectedColumnNames, selectedKeyColumnValues, defaultDatasetContext);
+
+    expect(result).toEqual({
+      mostRecentTimestamp: 1620000000000,
+      timestamps: [1620000000000],
+      data: [{ date: 1620000000000, CAN_cases: null, CAN_deaths: 5, USA_cases: null, USA_deaths: null }],
     });
   });
 });
